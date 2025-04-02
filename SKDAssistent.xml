@@ -314,6 +314,24 @@ fcc                       Alias to load, aim and fire cannon at floor*
             script="PylonTimerStop"
         />
     
+        <!-- Alias for checking update -->
+        <alias
+          match="^skda\supdate\scheck$"
+          enabled="y"
+          regexp="y"
+          sequence="99"
+          script="update_check_alias"
+        />
+        
+        <!-- Alias for installing update -->
+        <alias
+          match="^skda\supdate\sinstall$"
+          enabled="y"
+          regexp="y"
+          sequence="99"
+          script="update_install_alias"
+        />   
+    
     </aliases>
 	
 	<!-- Triggers for the plugin. -->
@@ -734,24 +752,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
             sequence="100"
             script="processRewards"
         />
-    
-        <!-- Alias for checking update -->
-        <alias
-          match="^skda\supdate\scheck$"
-          enabled="y"
-          regexp="y"
-          sequence="99"
-          script="update_check_alias"
-        />
-        
-        <!-- Alias for installing update -->
-        <alias
-          match="^skda\supdate\sinstall$"
-          enabled="y"
-          regexp="y"
-          sequence="99"
-          script="update_install_alias"
-        />        
+		
     </triggers>
     
     <!--  Script for the functions -->   

@@ -1360,8 +1360,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
                 ["28388"] = "SE",
                 ["28385"] = "E",
                 ["28386"] = "EA",
-                ["28382"] = "NE",
-                ["23285"] = "TEST"
+                ["28382"] = "NE"
             }
         
             if room_num then
@@ -1410,8 +1409,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
                 ["28388"] = "SE",
                 ["28385"] = "E",
                 ["28386"] = "EA",
-                ["28382"] = "NE",
-                ["23285"] = "TEST"
+                ["28382"] = "NE"
             }
         
             if room_num then
@@ -1513,8 +1511,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
                 ["28388"] = "SE",
                 ["28385"] = "E",
                 ["28386"] = "EA",
-                ["28382"] = "NE",
-        		["32877"] = "TEST"
+                ["28382"] = "NE"
             }
             
             -- Retrieve enemy and enemy health percentage
@@ -1587,10 +1584,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
                 ["28388"] = "SE",
                 ["28385"] = "E",
                 ["28386"] = "EA",
-                ["28382"] = "NE",
-                ["23285"] = "TEST",
-                ["34240"] = "TEST",
-                ["23286"] = "TEST"
+                ["28382"] = "NE"
             }
             
             if room_num then
@@ -1631,10 +1625,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
                 ["28388"] = { statement = "SE", connected_rooms = {"S", "E"} },
                 ["28385"] = { statement = "E", connected_rooms = {"EA", "SE", "NE"} },
                 ["28386"] = { statement = "EA", connected_rooms = {"E"} },
-                ["28382"] = { statement = "NE", connected_rooms = {"N", "E"} },
-        		["23285"] = { statement = "TEST", connected_rooms = {"TEST", "TEST"} },
-        		["34240"] = { statement = "TEST", connected_rooms = {"TEST", "TEST"} },
-                ["23286"] = { statement = "TEST", connected_rooms = {"TEST", "TEST"} }
+                ["28382"] = { statement = "NE", connected_rooms = {"N", "E"} }
             }
         
             if room_num and not reported_rooms[room_num] then
@@ -1682,10 +1673,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
                 ["28388"] = { statement = "SE", connected_rooms = {"S", "E"} },
                 ["28385"] = { statement = "E", connected_rooms = {"EA", "SE", "NE"} },
                 ["28386"] = { statement = "EA", connected_rooms = {"E"} },
-                ["28382"] = { statement = "NE", connected_rooms = {"N", "E"} },
-		        ["23285"] = { statement = "TEST", connected_rooms = {"TEST", "TEST"} },
-		        ["34240"] = { statement = "TEST", connected_rooms = {"TEST", "TEST"} },
-                ["23286"] = { statement = "TEST", connected_rooms = {"TEST", "TEST"} }
+                ["28382"] = { statement = "NE", connected_rooms = {"N", "E"} }
             }
             
             -- Retrieve room information via GMCP
@@ -1840,11 +1828,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
                 ["28388"] = "SE",
                 ["28385"] = "E",
                 ["28386"] = "EA",
-                ["28382"] = "NE",
-				["32877"] = "TEST",
-                ["23285"] = "TEST",
-                ["34240"] = "TEST",
-                ["23286"] = "TEST"
+                ["28382"] = "NE"
             }
         
             -- If there's no enemy or if the health percentage is invalid, do nothing

@@ -17,7 +17,7 @@
         date_written="2024-7-24 17:59:57"
         save_state="y"
         requires="5.07"
-        version="1.19"
+        version="1.20"
     >
         <description trim="y">
             <![CDATA[ 
@@ -366,7 +366,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
        
         <!-- Trigger for LIZAAN DEATH -->
         <trigger
-            match="^Lizaan.*(?:\bis DEAD\b|\bis battered to death\b|\blightning destroys\b|\bmind is destroyed\b|\bdamned forever\b|\bacid consumes\b|\blast spark of life is drained\b|\bturns deadly pale and collapses\b|\bfrozen to death\b|\bflames engulf\b|\bdestroyed by the blast\b|\bfinal deadly slash\b|\bforce of the water\b)|The voice of god has cleansed Lizaan.*$"			
+            match="^Lizaan.*(?:\bis DEAD\b|\bis battered to death\b|\blightning destroys\b|\bmind is destroyed\b|\bdamned forever\b|\bacid consumes\b|\blast spark of life is drained\b|\bturns deadly pale and collapses\b|\bfrozen to death\b|\bflames engulf\b|\bdestroyed by the blast\b|\bfinal deadly slash\b|\bforce of the water\b)|The voice of god has cleansed Lizaan.*$|The very fabric of the world rejects Lizaan.*$"			
             name="LizaanSpawn"
             enabled="y"
             group="SKDA"
@@ -1526,7 +1526,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
                 -- Construct the primary message
 				--local msg = " @C(@DSKD@C) @R" .. enemy
                 local msg = " @C(@DSKD@C) @WThe @RSea King"
-                msg = msg .. " @C(@R" .. enemypct .. "%@C)@W is attacking @Rme @Wat @C" .. statement .. "@Y"
+                msg = msg .. " @C(@R" .. enemypct .. "%@C)@W is attacking @Rme @wat @C" .. statement .. "@Y"
                 
                 -- Send the primary message silently (no echo)
                 SendNoEcho("gtell " .. msg)
@@ -1553,6 +1553,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
             reported_rooms = {}
             reported_count = 0
 			EnableTrigger("BadMLTrigger", true)
+			EnableTrigger("AutoGoodMLTrigger", false)
         end
         
         -- Function that checks for SelfTaunt
@@ -1560,6 +1561,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
             reported_rooms = {}
             reported_count = 0
 			EnableTrigger("BadMLTrigger", true)
+			EnableTrigger("AutoGoodMLTrigger", false)
         end
         
         -- Function that checks for BAD MOONLIGHT REPORT

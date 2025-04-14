@@ -17,7 +17,7 @@
         date_written="2024-7-24 17:59:57"
         save_state="y"
         requires="5.07"
-        version="1.20"
+        version="1.20a"
     >
         <description trim="y">
             <![CDATA[ 
@@ -858,6 +858,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
 		
         local _SKDA = "ON"
 		MinorToggle = "false"
+		pylonPhaseTriggered = false
         local _Channel = "gtell"
         local _LilacWeapon = "lilacweapon"
         local _LilacDual = "lilacdual"

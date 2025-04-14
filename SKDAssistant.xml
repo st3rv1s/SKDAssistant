@@ -393,7 +393,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
         <!-- Trigger for PYLON PHASE CONFIRM -->
         <trigger
             name="PylonSpawnTrigger"
-            match="^You hear a low, ominous hum and see a crystal pylon flicker into existance before you."
+            match="^You hear a low, ominous hum and see a crystal pylon flicker into existance before you.$"
             enabled="y"
             group="SKDA"
             regexp="y"
@@ -765,7 +765,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
         require("async")
         json = require("json")
 	    
-        plugin_url = "https://raw.githubusercontent.com/st3rv1s/SKDAssistant/refs/heads/main/SKDAssistent.xml"
+        plugin_url = "https://raw.githubusercontent.com/st3rv1s/SKDAssistant/refs/heads/main/SKDAssistant.xml"
         SetVariable("DownloadURL", plugin_url)
         plugin_protocol = "HTTPS"
         plugin_prefix = "[SKDAssistant]"
@@ -1320,6 +1320,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
         
         -- Handle Pylon Spawn
         function PylonSpawnTrigger(name, line, wildcards, styles)
+		  SendNoEcho("glance")
             -- Check if PylonPhaseTrigger has been called
             if not pylonPhaseTriggered then
                 PylonPhaseTrigger(name, line, wildcards, styles)
@@ -1545,6 +1546,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
             reported_rooms = {}
             reported_count = 0
 			EnableTrigger("BadMLTrigger", true)
+			EnableTrigger("AutoGoodMLTrigger", false)
             SendNoEcho(_Channel .. " @C(@DSKD@C) @YTaunt @GHIT @Won the @RSea King@W!@Y")
         end
         

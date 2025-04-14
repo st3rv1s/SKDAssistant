@@ -857,8 +857,8 @@ fcc                       Alias to load, aim and fire cannon at floor*
         ----------------------- End Plugin Update Code -----------------------
 		
         local _SKDA = "ON"
-		MinorToggle = "false"
-		pylonPhaseTriggered = false
+	MinorToggle = "false"
+	pylonPhaseTriggered = false
         local _Channel = "gtell"
         local _LilacWeapon = "lilacweapon"
         local _LilacDual = "lilacdual"
@@ -872,12 +872,12 @@ fcc                       Alias to load, aim and fire cannon at floor*
         local _WeaponBag = "bag"
         local _ShieldSKD = "shield"
         local _HoldSKD = "hold"
-		local startTime = 0
-		local endTime = 0 
+	local startTime = 0
+	local endTime = 0 
 						
-	    require "serialize"
-	    require "commas"
-		require "gmcphelper"
+	 require "serialize"
+	 require "commas"
+	 require "gmcphelper"
 			       
         function OnHelp()
             world.Note(world.GetPluginInfo(world.GetPluginID(), 3))

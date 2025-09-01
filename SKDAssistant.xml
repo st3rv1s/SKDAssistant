@@ -17,7 +17,7 @@
         date_written="2024-7-24 17:59:57"
         save_state="y"
         requires="5.07"
-        version="1.22"
+        version="1.23"
     >
         <description trim="y">
             <![CDATA[ 
@@ -393,7 +393,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
         <!-- Trigger for PYLON PHASE CONFIRM -->
         <trigger
             name="PylonSpawnTrigger"
-            match="^You hear a low, ominous hum and see a crystal pylon flicker into existance before you.$"
+            match="^You hear a low, ominous hum and see a crystal pylon.*$"
             enabled="y"
             group="SKDA"
             regexp="y"
@@ -2256,3 +2256,4 @@ fcc                       Alias to load, aim and fire cannon at floor*
     </script>
 
 </muclient>
+

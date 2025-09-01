@@ -17,7 +17,7 @@
         date_written="2024-7-24 17:59:57"
         save_state="y"
         requires="5.07"
-        version="1.23"
+        version="1.24"
     >
         <description trim="y">
             <![CDATA[ 
@@ -1137,81 +1137,91 @@ fcc                       Alias to load, aim and fire cannon at floor*
             Note("The current bag ID is: " .. _WeaponBag)
         end
                 
-        -- Store the text color values for each pylon color
-        _lilacColor = ColoursToStyles("@x147")[1].textcolour
-        _ceruleanColor = ColoursToStyles("@x075")[1].textcolour
-        _seafoamColor = ColoursToStyles("@x159")[1].textcolour
-        
-        -- Define a global variable to track the last pylon color
+        -- Store pylon colors
+        _lilacColors    = { ColoursToStyles("@x147")[1].textcolour }
+        _ceruleanColors = { ColoursToStyles("@x075")[1].textcolour }
+        _seafoamColors  = { ColoursToStyles("@x159")[1].textcolour }
+         
+        -- Track last pylon color
         local lastPylonColor = nil
-        
-        -- Handle pylon colors and actions
+         
+        -- Helper to check if a value exists in a table
+        function contains(tbl, val)
+            for _, v in ipairs(tbl) do
+                if v == val then return true end
+            end
+            return false
+        end
+         
+        -- Handle pylon colors and weapon/spell swaps
         function PylonColorsTrigger(name, line, wildcards, styles)
-            -- Check if PylonPhaseTrigger has been called
             if not pylonPhaseTriggered then
                 PylonPhaseTrigger(name, line, wildcards, styles)
                 pylonPhaseTriggered = true
                 PylonTimer()
             end
-        
-            local currentColor = styles[1].textcolour
-        
-            -- If the current color is the same as the last encountered color, exit the function
-            if currentColor == lastPylonColor then
-                return
+         
+            -- Find the colored pylon segment
+            local currentColor
+            for _, s in ipairs(styles) do
+                if contains(_lilacColors, s.textcolour) or
+                   contains(_ceruleanColors, s.textcolour) or
+                   contains(_seafoamColors, s.textcolour) then
+                    currentColor = s.textcolour
+                    break
+                end
             end
-        
-            -- Update the last pylon color
+         
+            if not currentColor or currentColor == lastPylonColor then return end
             lastPylonColor = currentColor
-        
-            if currentColor == _lilacColor then
-				local lmsg = "@C(@DSKD@C) @WDamage types for lilac crystal pylon: @MSlash@W, @MSonic@W, @MElectric@W, @MAir@W, @MHoly @Wor @MNegative@w"
-				
-            if MinorToggle == "true" then
-                sendMessage(lmsg)
-            else
-                cnote(lmsg)
-            end
-                -- Set your main, offhand and attack spell or skill here
+         
+            if contains(_lilacColors, currentColor) then
+                local lmsg = "@C(@DSKD@C) @WDamage types for lilac crystal pylon: @MSlash@W, @MSonic@W, @MElectric@W, @MAir@W, @MHoly @Wor @MNegative@w"
+                if MinorToggle == "true" then sendMessage(lmsg) else cnote(lmsg) end
                 SendNoEcho("get " .. _LilacWeapon .. " " .. _WeaponBag)
                 SendNoEcho("second " .. _LilacWeapon)
                 SendNoEcho("get " .. _LilacDual .. " " .. _WeaponBag)
                 SendNoEcho("wield " .. _LilacDual)
-                --SendNoEcho("put " .. _ShieldSKD .. " " .. _WeaponBag)
-                --SendNoEcho("put " .. _HoldSKD .. " " .. _WeaponBag)
                 SendNoEcho("alias cc " .. _LilacSpell .. " pylon")
-            elseif currentColor == _ceruleanColor then
-				local cmsg = "@C(@DSKD@C) @WDamage types for cerulean crystal pylon: @BLight@W, @BBash@W, @BEnergy@W, @BFire@W, @BAcid @Wor @BEarth@w"
-			
-			if MinorToggle == "true" then
-                sendMessage(cmsg)
-            else
-                cnote(cmsg)
-            end
-                -- Set your main, offhand and attack spell or skill here
+         
+            elseif contains(_ceruleanColors, currentColor) then
+                local cmsg = "@C(@DSKD@C) @WDamage types for cerulean crystal pylon: @BLight@W, @BBash@W, @BEnergy@W, @BFire@W, @BAcid @Wor @BEarth@w"
+                if MinorToggle == "true" then sendMessage(cmsg) else cnote(cmsg) end
                 SendNoEcho("get " .. _CeruleanWeapon .. " " .. _WeaponBag)
                 SendNoEcho("wield " .. _CeruleanWeapon)
                 SendNoEcho("get " .. _CeruleanDual .. " " .. _WeaponBag)
                 SendNoEcho("second " .. _CeruleanDual)
-                --SendNoEcho("put " .. _ShieldSKD .. " " .. _WeaponBag)
-                --SendNoEcho("put " .. _HoldSKD .. " " .. _WeaponBag)
                 SendNoEcho("alias cc " .. _CeruleanSpell .. " pylon")
-            elseif currentColor == _seafoamColor then
-			    local smsg = "@C(@DSKD@C) @WDamage types for seafoam crystal pylon: @YMental@W, @YMagic@W, @YPierce@W, @YCold@W, @YShadow @Wor @YWater@w"
-				
-			if MinorToggle == "true" then
-                sendMessage(smsg)
-            else
-                cnote(smsg)
-            end						
-                -- Set your main, offhand and attack spell or skill here
+         
+            elseif contains(_seafoamColors, currentColor) then
+                local smsg = "@C(@DSKD@C) @WDamage types for seafoam crystal pylon: @YMental@W, @YMagic@W, @YPierce@W, @YCold@W, @YShadow @Wor @YWater@w"
+                if MinorToggle == "true" then sendMessage(smsg) else cnote(smsg) end
                 SendNoEcho("get " .. _SeafoamWeapon .. " " .. _WeaponBag)
                 SendNoEcho("wield " .. _SeafoamWeapon)
                 SendNoEcho("get " .. _SeafoamDual .. " " .. _WeaponBag)
                 SendNoEcho("second " .. _SeafoamDual)
-                --SendNoEcho("put " .. _ShieldSKD .. " " .. _WeaponBag)
-                --SendNoEcho("put " .. _HoldSKD .. " " .. _WeaponBag)
                 SendNoEcho("alias cc " .. _SeafoamSpell .. " pylon")
+            end
+        end
+         
+        -- Handle Pylon Spawn
+        function PylonSpawnTrigger(name, line, wildcards, styles)
+            -- Ensure the phase logic runs once
+            if not pylonPhaseTriggered then
+                PylonPhaseTrigger(name, line, wildcards, styles)
+                pylonPhaseTriggered = true
+                PylonTimer()
+            end
+         
+            -- Detect color directly from the spawn line
+            for i, s in ipairs(styles) do
+                local str_lower = s.text:lower()
+             
+                if string.find(str_lower, "crystal pylon") then
+                    -- Call the existing color handler
+                    PylonColorsTrigger(name, line, wildcards, styles)
+                    break
+                end
             end
         end
         
@@ -1316,17 +1326,6 @@ fcc                       Alias to load, aim and fire cannon at floor*
                 end				
 				
                 pylonExplosionEnabled = false
-            end
-        end
-        
-        -- Handle Pylon Spawn
-        function PylonSpawnTrigger(name, line, wildcards, styles)
-		  SendNoEcho("glance")
-            -- Check if PylonPhaseTrigger has been called
-            if not pylonPhaseTriggered then
-                PylonPhaseTrigger(name, line, wildcards, styles)
-                pylonPhaseTriggered = true
-                PylonTimer()
             end
         end
         

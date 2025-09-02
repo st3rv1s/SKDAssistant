@@ -17,14 +17,14 @@
         date_written="2024-7-24 17:59:57"
         save_state="y"
         requires="5.07"
-        version="1.27"
+        version="1.28"
     >
         <description trim="y">
             <![CDATA[ 
             
 --------------------------[SKD Assistant Helpfile]--------------------------
 
-skda info                 Turn on/off extra information
+skda info                 Toggle extra information broadcasts
 skda channel x            Change channel for the broadcasts 
 skda update check         Check if there is a new version
 skda update install       Install new version from Github
@@ -869,7 +869,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
         end
         ----------------------- End Plugin Update Code -----------------------
 		
-        local _skdaINFO = "ON"
+        local _skdaINFO = "OFF"
 	MinorToggle = "false"
 	pylonPhaseTriggered = false
         local _Channel = "gtell"
@@ -964,7 +964,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
 		                cnote("")
                 cnote("@C+@W-------------------[@CSKD Assistant Settings@W]-------------------@C+@w")
                 ColourNote("white", "", "", "white", "", "")
-                ColourNote("lightcyan", "", "skda info           - ", "white", "", "Turn on/off extra information")
+                ColourNote("lightcyan", "", "skda info           - ", "white", "", "Toggle extra information broadcasts")
 				ColourNote("lightcyan", "", "skda channel        - ", "white", "", "Set to channel: ", "cyan", "", _Channel)
 				ColourNote("lightcyan", "", "skda update check   - ", "white", "", "Check if there is a new version")
                 ColourNote("lightcyan", "", "skda update install - ", "white", "", "Install new version from Github")
@@ -1693,10 +1693,10 @@ fcc                       Alias to load, aim and fire cannon at floor*
                 end
         
                 local common_prefix = "@C(@DSKD@C) "
-                local msg = common_prefix .. "@GGOOD MOONLIGHT @Wat @C" .. room_statement .. "@W! "
-				local position_msg = "@WTank @RSea King @Wat " .. formatted_connections .. "@Y"
+                local msg = common_prefix .. "@GGOOD MOONLIGHT @Wat @C" .. room_statement .. "@W!@Y"
+				local position_msg = " @WTank @RSea King @Wat " .. formatted_connections .. "@Y"
         
-                if _skdaINFO == "ON" then
+                if _skdaINFO == "OFF" then
                     SendNoEcho(_Channel .. " " .. msg)
                 else
                     SendNoEcho(_Channel .. " " .. msg .. position_msg)
@@ -1762,15 +1762,15 @@ fcc                       Alias to load, aim and fire cannon at floor*
             local common_prefix = "@C(@DSKD@C) "
             
             -- Construct the original message
-            local msg = common_prefix .. "@GGOOD MOONLIGHT @Wat @C" .. room_statement .. "@W! "
+            local msg = common_prefix .. "@GGOOD MOONLIGHT @Wat @C" .. room_statement .. "@W!@Y"
             
             -- Add the additional positioning message with color codes
 
-			local position_msg = "@WPosition @RSea King @Wat " .. formatted_connections .. "@Y"
+			local position_msg = " @WPosition @RSea King @Wat " .. formatted_connections .. "@Y"
             
             -- Send the messages separately
             SendNoEcho("gtell " .. msg .. position_msg)
-                if _skdaINFO == "ON" then
+                if _skdaINFO == "OFF" then
                     SendNoEcho("gtell " .. msg)
                 else
                     SendNoEcho("gtell " .. msg .. position_msg)
@@ -2283,7 +2283,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
             _WeaponBag = GetVariable("Save_WeaponBag") or "empty"
             _ShieldSKD = GetVariable("Save_ShieldSKD") or "empty"
             _HoldSKD = GetVariable("Save_HoldSKD") or "empty" 
-			_skdaINFO = GetVariable("Save_skdaINFO") or "ON"	
+			_skdaINFO = GetVariable("Save_skdaINFO") or "OFF"	
         end  
         
         function OnPluginSaveState()
@@ -2307,4 +2307,3 @@ fcc                       Alias to load, aim and fire cannon at floor*
     </script>
 
 </muclient>
-

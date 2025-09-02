@@ -17,7 +17,7 @@
         date_written="2024-7-24 17:59:57"
         save_state="y"
         requires="5.07"
-        version="1.26"
+        version="1.27"
     >
         <description trim="y">
             <![CDATA[ 
@@ -2282,7 +2282,8 @@ fcc                       Alias to load, aim and fire cannon at floor*
             _SeafoamSpell = GetVariable("Save_SeafoamSpell") or "empty"
             _WeaponBag = GetVariable("Save_WeaponBag") or "empty"
             _ShieldSKD = GetVariable("Save_ShieldSKD") or "empty"
-            _HoldSKD = GetVariable("Save_HoldSKD") or "empty"   
+            _HoldSKD = GetVariable("Save_HoldSKD") or "empty" 
+			_skdaINFO = GetVariable("Save_skdaINFO") or "ON"	
         end  
         
         function OnPluginSaveState()
@@ -2299,6 +2300,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
             SetVariable("Save_WeaponBag", _WeaponBag)
             SetVariable("Save_ShieldSKD", _ShieldSKD)
             SetVariable("Save_HoldSKD", _HoldSKD)
+			SetVariable("Save_skdaINFO", _skdaINFO)
         end
         
         ]]>

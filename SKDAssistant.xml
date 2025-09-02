@@ -17,7 +17,7 @@
         date_written="2024-7-24 17:59:57"
         save_state="y"
         requires="5.07"
-        version="1.25"
+        version="1.26"
     >
         <description trim="y">
             <![CDATA[ 
@@ -1197,7 +1197,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
             if contains(_lilacColors, currentColor) then
                 local lmsg = "@C(@DSKD@C) @WDamage types for lilac crystal pylon: @MSlash@W, @MSonic@W, @MElectric@W, @MAir@W, @MHoly @Wor @MNegative@w"
 				
-				if skdaINFO == "ON" then
+				if _skdaINFO == "ON" then
 					if MinorToggle == "true" then 
 						sendMessage(lmsg)
 					else 
@@ -1214,7 +1214,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
             elseif contains(_ceruleanColors, currentColor) then
                 local cmsg = "@C(@DSKD@C) @WDamage types for cerulean crystal pylon: @BLight@W, @BBash@W, @BEnergy@W, @BFire@W, @BAcid @Wor @BEarth@w"
 				
-				if skdaINFO == "ON" then
+				if _skdaINFO == "ON" then
 					if MinorToggle == "true" then 
 						sendMessage(cmsg)
 					else 
@@ -1231,7 +1231,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
             elseif contains(_seafoamColors, currentColor) then
                 local smsg = "@C(@DSKD@C) @WDamage types for seafoam crystal pylon: @YMental@W, @YMagic@W, @YPierce@W, @YCold@W, @YShadow @Wor @YWater@w"
 				
-				if skdaINFO == "ON" then
+				if _skdaINFO == "ON" then
 					if MinorToggle == "true" then 
 						sendMessage(smsg)
 					else 
@@ -1696,7 +1696,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
                 local msg = common_prefix .. "@GGOOD MOONLIGHT @Wat @C" .. room_statement .. "@W! "
 				local position_msg = "@WTank @RSea King @Wat " .. formatted_connections .. "@Y"
         
-                if skdaINFO == "ON" then
+                if _skdaINFO == "ON" then
                     SendNoEcho(_Channel .. " " .. msg)
                 else
                     SendNoEcho(_Channel .. " " .. msg .. position_msg)
@@ -1770,7 +1770,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
             
             -- Send the messages separately
             SendNoEcho("gtell " .. msg .. position_msg)
-                if skdaINFO == "ON" then
+                if _skdaINFO == "ON" then
                     SendNoEcho("gtell " .. msg)
                 else
                     SendNoEcho("gtell " .. msg .. position_msg)

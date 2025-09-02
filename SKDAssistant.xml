@@ -962,7 +962,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
 		
 		function SettingsSKDA()
 		                cnote("")
-                cnote("@C+@W-------------------[@CSKD Assistant Helpfile@W]-------------------@C+@w")
+                cnote("@C+@W-------------------[@CSKD Assistant Settings@W]-------------------@C+@w")
                 ColourNote("white", "", "", "white", "", "")
                 ColourNote("lightcyan", "", "skda info           - ", "white", "", "Turn on/off extra information")
 				ColourNote("lightcyan", "", "skda channel        - ", "white", "", "Set to channel: ", "cyan", "", _Channel)
@@ -997,7 +997,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
                 ColourNote("lightcyan", "", "lizstop             - ", "white", "", "Manually stops Lizaan timer (if needed)")
                 ColourNote("lightcyan", "", "pylstop             - ", "white", "", "Manually stops Pylon timer (if needed)")
                 ColourNote("white", "", "", "white", "", "")
-                cnote("@C+@W-------------------[@CSKD Assistant Helpfile@W]-------------------@C+@w")
+                cnote("@C+@W-------------------[@CSKD Assistant Settings@W]-------------------@C+@w")
                 cnote("")
 				checkPluginAndSetToggle()
 				cnote("")
@@ -2307,3 +2307,4 @@ fcc                       Alias to load, aim and fire cannon at floor*
     </script>
 
 </muclient>
+

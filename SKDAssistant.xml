@@ -17,15 +17,18 @@
         date_written="2024-7-24 17:59:57"
         save_state="y"
         requires="5.07"
-        version="1.24"
+        version="1.25"
     >
         <description trim="y">
             <![CDATA[ 
             
 --------------------------[SKD Assistant Helpfile]--------------------------
 
-skda                      Turn on/off certain parts
+skda info                 Turn on/off extra information
 skda channel x            Change channel for the broadcasts 
+skda update check         Check if there is a new version
+skda update install       Install new version from Github
+skda settings             Show the configured settings
 skda help                 Outputs the helpfile of this plugin
 
 -------------------------[SKD Assistant Weapons]--------------------------
@@ -83,10 +86,20 @@ fcc                       Alias to load, aim and fire cannon at floor*
             sequence="100"
             script="OnHelp"
         />
+
+        <!-- Define the alias for SETTINGS -->
+        <alias
+            match="^skda\ssettings$"
+            enabled="y"
+            omit_from_output="n"
+            regexp="y"
+            sequence="100"
+            script="SettingsSKDA"
+        />
     
         <!-- Define the alias for PLUGIN STATE -->
         <alias
-            match="^skda$"
+            match="^skda\sinfo$"
             name="ToggleOnSKDA"
             enabled="y"
             omit_from_output="n"
@@ -856,7 +869,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
         end
         ----------------------- End Plugin Update Code -----------------------
 		
-        local _SKDA = "ON"
+        local _skdaINFO = "ON"
 	MinorToggle = "false"
 	pylonPhaseTriggered = false
         local _Channel = "gtell"
@@ -935,21 +948,28 @@ fcc                       Alias to load, aim and fire cannon at floor*
         end
 
         function ToggleSKDA()
-            if _SKDA == "ON" then 
-                _SKDA = "OFF"
-                EnableGroup("SKDA", false)
-                cnote("@WSKD Assistant is @RDISABLED@W!@Y")
+            if _skdaINFO == "ON" then 
+                _skdaINFO = "OFF"
+                cnote("@WSKD Assistant Info is @RDISABLED@W!@Y")
 				cnote("")
-            elseif _SKDA == "OFF" then
-                _SKDA = "ON"
+            elseif _skdaINFO == "OFF" then
+                _skdaINFO = "ON"
                 EnableGroup("SKDA", true) 
-                cnote("@WSKD Assistant is @GENABLED@W!@Y")
-                cnote("")
+                cnote("@WSKD Assistant Info is @GENABLED@W!@Y")
+				cnote("")
+            end
+        end
+		
+		function SettingsSKDA()
+		                cnote("")
                 cnote("@C+@W-------------------[@CSKD Assistant Helpfile@W]-------------------@C+@w")
                 ColourNote("white", "", "", "white", "", "")
-                ColourNote("lightcyan", "", "skda                - ", "white", "", "Turn on/off the plugin")
+                ColourNote("lightcyan", "", "skda info           - ", "white", "", "Turn on/off extra information")
 				ColourNote("lightcyan", "", "skda channel        - ", "white", "", "Set to channel: ", "cyan", "", _Channel)
-                ColourNote("lightcyan", "", "skda help           - ", "white", "", "Outputs this helpfile.")
+				ColourNote("lightcyan", "", "skda update check   - ", "white", "", "Check if there is a new version")
+                ColourNote("lightcyan", "", "skda update install - ", "white", "", "Install new version from Github")
+                ColourNote("lightcyan", "", "skda settings       - ", "white", "", "Show the configured settings")
+                ColourNote("lightcyan", "", "skda help           - ", "white", "", "Outputs this helpfile")
                 ColourNote("white", "", "", "white", "", "")
                 cnote("@C+@W-------------------[@CSKD Assistant Weapons@W]-------------------@C+@w")
                 ColourNote("white", "", "", "white", "", "")
@@ -981,8 +1001,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
                 cnote("")
 				checkPluginAndSetToggle()
 				cnote("")
-            end
-        end
+		end
         
         -- SETTING THE ID FOR LILAC WEAPONS
         function SetLilac(name, line, wildcards)
@@ -1177,7 +1196,15 @@ fcc                       Alias to load, aim and fire cannon at floor*
          
             if contains(_lilacColors, currentColor) then
                 local lmsg = "@C(@DSKD@C) @WDamage types for lilac crystal pylon: @MSlash@W, @MSonic@W, @MElectric@W, @MAir@W, @MHoly @Wor @MNegative@w"
-                if MinorToggle == "true" then sendMessage(lmsg) else cnote(lmsg) end
+				
+				if skdaINFO == "ON" then
+					if MinorToggle == "true" then 
+						sendMessage(lmsg)
+					else 
+						cnote(lmsg) 
+					end
+				end
+				
                 SendNoEcho("get " .. _LilacWeapon .. " " .. _WeaponBag)
                 SendNoEcho("second " .. _LilacWeapon)
                 SendNoEcho("get " .. _LilacDual .. " " .. _WeaponBag)
@@ -1186,7 +1213,15 @@ fcc                       Alias to load, aim and fire cannon at floor*
          
             elseif contains(_ceruleanColors, currentColor) then
                 local cmsg = "@C(@DSKD@C) @WDamage types for cerulean crystal pylon: @BLight@W, @BBash@W, @BEnergy@W, @BFire@W, @BAcid @Wor @BEarth@w"
-                if MinorToggle == "true" then sendMessage(cmsg) else cnote(cmsg) end
+				
+				if skdaINFO == "ON" then
+					if MinorToggle == "true" then 
+						sendMessage(cmsg)
+					else 
+						cnote(cmsg) 
+					end
+				end
+				
                 SendNoEcho("get " .. _CeruleanWeapon .. " " .. _WeaponBag)
                 SendNoEcho("wield " .. _CeruleanWeapon)
                 SendNoEcho("get " .. _CeruleanDual .. " " .. _WeaponBag)
@@ -1195,7 +1230,15 @@ fcc                       Alias to load, aim and fire cannon at floor*
          
             elseif contains(_seafoamColors, currentColor) then
                 local smsg = "@C(@DSKD@C) @WDamage types for seafoam crystal pylon: @YMental@W, @YMagic@W, @YPierce@W, @YCold@W, @YShadow @Wor @YWater@w"
-                if MinorToggle == "true" then sendMessage(smsg) else cnote(smsg) end
+				
+				if skdaINFO == "ON" then
+					if MinorToggle == "true" then 
+						sendMessage(smsg)
+					else 
+						cnote(smsg) 
+					end
+				end
+				
                 SendNoEcho("get " .. _SeafoamWeapon .. " " .. _WeaponBag)
                 SendNoEcho("wield " .. _SeafoamWeapon)
                 SendNoEcho("get " .. _SeafoamDual .. " " .. _WeaponBag)
@@ -1651,11 +1694,13 @@ fcc                       Alias to load, aim and fire cannon at floor*
         
                 local common_prefix = "@C(@DSKD@C) "
                 local msg = common_prefix .. "@GGOOD MOONLIGHT @Wat @C" .. room_statement .. "@W! "
-                --local position_msg = common_prefix .. "@WPosition @RSea King @Wat " .. formatted_connections .. "@Y"
 				local position_msg = "@WTank @RSea King @Wat " .. formatted_connections .. "@Y"
         
-                SendNoEcho(_Channel .. " " .. msg .. position_msg)
-                --SendNoEcho(_Channel .. " " .. position_msg)
+                if skdaINFO == "ON" then
+                    SendNoEcho(_Channel .. " " .. msg)
+                else
+                    SendNoEcho(_Channel .. " " .. msg .. position_msg)
+                end
 
         		GoodMLReport()
                 EnableTrigger("AutoGoodMLTrigger", false) -- Disable the AutoGoodMLTrigger after reporting
@@ -1720,12 +1765,17 @@ fcc                       Alias to load, aim and fire cannon at floor*
             local msg = common_prefix .. "@GGOOD MOONLIGHT @Wat @C" .. room_statement .. "@W! "
             
             -- Add the additional positioning message with color codes
-            --local position_msg = common_prefix .. " @WTank @RSea King @Wat " .. formatted_connections .. "@Y"
+
 			local position_msg = "@WPosition @RSea King @Wat " .. formatted_connections .. "@Y"
             
             -- Send the messages separately
             SendNoEcho("gtell " .. msg .. position_msg)
-            --SendNoEcho("gtell " .. position_msg)
+                if skdaINFO == "ON" then
+                    SendNoEcho("gtell " .. msg)
+                else
+                    SendNoEcho("gtell " .. msg .. position_msg)
+                end
+
         end
                 
         -- Function that echoes instructions for GOOD MOONLIGHT
@@ -2255,4 +2305,3 @@ fcc                       Alias to load, aim and fire cannon at floor*
     </script>
 
 </muclient>
-

@@ -17,7 +17,7 @@
         date_written="2024-7-24 17:59:57"
         save_state="y"
         requires="5.07"
-        version="1.29"
+        version="1.3"
     >
         <description trim="y">
             <![CDATA[ 
@@ -869,9 +869,9 @@ fcc                       Alias to load, aim and fire cannon at floor*
         end
         ----------------------- End Plugin Update Code -----------------------
 		
-        local _skdaINFO = "OFF"
 	MinorToggle = "false"
 	pylonPhaseTriggered = false
+        local _skdaINFO = "OFF"
         local _Channel = "gtell"
         local _LilacWeapon = "lilacweapon"
         local _LilacDual = "lilacdual"
@@ -961,10 +961,15 @@ fcc                       Alias to load, aim and fire cannon at floor*
         end
 		
 		function SettingsSKDA()
-		                cnote("")
+		
+                local _infoColor = "red"
+                if _skdaINFO == "ON" then
+                    _infoColor = "lightgreen"
+				end
+		        cnote("")
                 cnote("@C+@W-------------------[@CSKD Assistant Settings@W]-------------------@C+@w")
                 ColourNote("white", "", "", "white", "", "")
-                ColourNote("lightcyan", "", "skda info           - ", "white", "", "Toggle extra information broadcasts")
+                ColourNote("lightcyan", "", "skda info           - ", "white", "", "Status: ", _infoColor, "", _skdaINFO)
 				ColourNote("lightcyan", "", "skda channel        - ", "white", "", "Set to channel: ", "cyan", "", _Channel)
 				ColourNote("lightcyan", "", "skda update check   - ", "white", "", "Check if there is a new version")
                 ColourNote("lightcyan", "", "skda update install - ", "white", "", "Install new version from Github")
@@ -1206,9 +1211,9 @@ fcc                       Alias to load, aim and fire cannon at floor*
 				end
 				
                 SendNoEcho("get " .. _LilacWeapon .. " " .. _WeaponBag)
-                SendNoEcho("second " .. _LilacWeapon)
+                SendNoEcho("wield " .. _LilacWeapon)
                 SendNoEcho("get " .. _LilacDual .. " " .. _WeaponBag)
-                SendNoEcho("wield " .. _LilacDual)
+                SendNoEcho("second " .. _LilacDual)
                 SendNoEcho("alias cc " .. _LilacSpell .. " pylon")
          
             elseif contains(_ceruleanColors, currentColor) then
@@ -1431,6 +1436,8 @@ fcc                       Alias to load, aim and fire cannon at floor*
             -- Disable the trigger after it has been triggered
             EnableTrigger("CannonReportTrigger", false)
             EnableTrigger("BadMLTrigger", false)
+			EnableTrigger("GoodMLReport", false)
+			EnableTrigger("AutoGoodMLTrigger", false)
 		
             -- Check if PylonPhaseTrigger has been called
             if not pylonPhaseTriggered then
@@ -1832,8 +1839,9 @@ fcc                       Alias to load, aim and fire cannon at floor*
 			
 			-- Common actions for this case
             EnableTrigger("CannonReportTrigger", true)
+			EnableTrigger("GoodMLTrigger", false)
             EnableTrigger("BadMLTrigger", false)
-			EnableTrigger("AutoGoodMLTrigger", false)
+			EnableTrigger("AutoGoodMLTrigger", false)	
             
             SendNoEcho(_Channel .. " @C(@DSKD@C) @WPhase incoming: @MPylon @Wor @RHeal@Y")
             SendNoEcho("map")
@@ -1851,6 +1859,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
 			
 			-- Common actions for this case
             EnableTrigger("CannonReportTrigger", false)
+			EnableTrigger("GoodMLTrigger", true)
 			EnableTrigger("BadMLTrigger", true)
 			EnableTrigger("AutoGoodMLTrigger", false)
             
@@ -1929,6 +1938,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
 			EnableTrigger("KillPhaseTrigger", true)
             EnableTrigger("CannonReportTrigger", true)
 			EnableTrigger("BadMLTrigger", true)
+			EnableTrigger("GoodMLTrigger", false)			
 			EnableTrigger("AutoGoodMLTrigger", false)
             EnableTrigger("VisionBlurringTrigger", true)
             
@@ -1952,6 +1962,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
 			EnableTrigger("KillPhaseTrigger", true)
             EnableTrigger("CannonReportTrigger", true)
 			EnableTrigger("BadMLTrigger", true)
+			EnableTrigger("GoodMLTrigger", false)
 			EnableTrigger("AutoGoodMLTrigger", false)
             EnableTrigger("VisionBlurringTrigger", true)
                        
@@ -1975,6 +1986,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
 			EnableTrigger("KillPhaseTrigger", true)
             EnableTrigger("CannonReportTrigger", false)
 			EnableTrigger("BadMLTrigger", true)
+			EnableTrigger("GoodMLTrigger", false)
 			EnableTrigger("AutoGoodMLTrigger", false)
         end
         
@@ -1997,6 +2009,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
                 EnableTrigger("KillPhaseTrigger", true)
 				EnableTrigger("CannonReportTrigger", false)
 				EnableTrigger("BadMLTrigger", false)
+				EnableTrigger("GoodMLTrigger", false)
 				EnableTrigger("AutoGoodMLTrigger", false)
 				EnableTrigger("LizaanTrigger", true) 
                 
@@ -2033,6 +2046,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
             EnableTrigger("KillPhaseTrigger", true)
 			EnableTrigger("CannonReportTrigger", false)
 			EnableTrigger("BadMLTrigger", false)
+			EnableTrigger("GoodMLTrigger", false)
 			EnableTrigger("AutoGoodMLTrigger", false)
 			EnableTrigger("LizaanTrigger", true) 			
             
@@ -2306,4 +2320,3 @@ fcc                       Alias to load, aim and fire cannon at floor*
     </script>
 
 </muclient>
-

@@ -989,15 +989,6 @@ fcc                       Alias to load, aim and fire cannon at floor*
                 ColourNote("lightcyan", "", "skda shield         - ", "white", "", "Set to ID: ", "orangered", "", _ShieldSKD)
                 ColourNote("lightcyan", "", "skda hold           - ", "white", "", "Set to ID: ", "limegreen", "", _HoldSKD)
                 ColourNote("white", "", "", "white", "", "")  
-                cnote("@C+@W-------------------[@CSKD Assistant Commands@W]-------------------@C+@w")
-                ColourNote("white", "", "", "white", "", "")
-                ColourNote("lightcyan", "", "ml                  - ", "white", "", "Broadcast the good moonlight location")
-				ColourNote("lightcyan", "", "cc                  - ", "white", "", "Attack pylon after weapon swap")
-                ColourNote("lightcyan", "", "fc                  - ", "white", "", "Load, aim and fire cannon to the ceiling")
-                ColourNote("lightcyan", "", "fcc                 - ", "white", "", "Load, aim and fire cannon to the floor")
-                ColourNote("lightcyan", "", "lizstop             - ", "white", "", "Manually stops Lizaan timer (if needed)")
-                ColourNote("lightcyan", "", "pylstop             - ", "white", "", "Manually stops Pylon timer (if needed)")
-                ColourNote("white", "", "", "white", "", "")
                 cnote("@C+@W-------------------[@CSKD Assistant Settings@W]-------------------@C+@w")
                 cnote("")
 				checkPluginAndSetToggle()
@@ -2316,5 +2307,6 @@ fcc                       Alias to load, aim and fire cannon at floor*
     </script>
 
 </muclient>
+
 
 

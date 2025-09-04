@@ -971,10 +971,6 @@ fcc                       Alias to load, aim and fire cannon at floor*
                 ColourNote("white", "", "", "white", "", "")
                 ColourNote("lightcyan", "", "skda info           - ", "white", "", "Status: ", _infoColor, "", _skdaINFO)
 				ColourNote("lightcyan", "", "skda channel        - ", "white", "", "Set to channel: ", "cyan", "", _Channel)
-				ColourNote("lightcyan", "", "skda update check   - ", "white", "", "Check if there is a new version")
-                ColourNote("lightcyan", "", "skda update install - ", "white", "", "Install new version from Github")
-                ColourNote("lightcyan", "", "skda settings       - ", "white", "", "Show the configured settings")
-                ColourNote("lightcyan", "", "skda help           - ", "white", "", "Outputs this helpfile")
                 ColourNote("white", "", "", "white", "", "")
                 cnote("@C+@W-------------------[@CSKD Assistant Weapons@W]-------------------@C+@w")
                 ColourNote("white", "", "", "white", "", "")
@@ -2320,3 +2316,4 @@ fcc                       Alias to load, aim and fire cannon at floor*
     </script>
 
 </muclient>
+

@@ -1769,7 +1769,6 @@ fcc                       Alias to load, aim and fire cannon at floor*
 			local position_msg = " @WPosition @RSea King @Wat " .. formatted_connections .. "@Y"
             
             -- Send the messages separately
-            SendNoEcho("gtell " .. msg .. position_msg)
                 if _skdaINFO == "OFF" then
                     SendNoEcho("gtell " .. msg)
                 else

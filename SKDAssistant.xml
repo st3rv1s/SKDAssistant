@@ -35,19 +35,19 @@ skda help                 Outputs the helpfile of this plugin
 
 skda lilac x              Set the ID of lilac main weapon
 skda lilacdual x          Set the ID of lilac offhand weapon
-skda lilacspell x         Set the ID of lilac attack*
+skda lilacatk x           Set the ID of lilac attack*
 
 Vulnerable to: Slash, Sonic, Electric, Air, Holy, Acid or Negative
 
 skda cerulean x           Set the ID of cerulean main weapon
 skda ceruleandual x       Set the ID of cerulean offhand weapon
-skda ceruleanspell x      Set the ID of cerulean attack*
+skda ceruleantk x         Set the ID of cerulean attack*
 
 Vulnerable to: Light, Bash, Energy, Fire or Earth
 
 skda seafoam x            Set the ID of seafoam main weapon
 skda seafoamdual x        Set the ID of seafoam offhand weapon
-skda seafoamspell x       Set the ID of seafoam attack*
+skda seafoamatk x         Set the ID of seafoam attack*
 
 Vulnerable to: Mental, Magic, Pierce, Cold, Shadow or Water
 
@@ -146,14 +146,14 @@ fcc                       Alias to load, aim and fire cannon at floor*
     
         <!-- Define the alias to set ID LILAC ATTACK -->
         <alias
-            match="^skda\slilacspell\s(.*?)$"
-            name="setskdlilacspell"
+            match="^skda\slilacatk\s(.*?)$"
+            name="setskdlilacatk"
             enabled="y"
             group="SKDA"
             omit_from_output="n"
             regexp="y"
             sequence="100"
-            script="SetLilacSpell"
+            script="SetLilacATK"
         />
     
         <!-- Define the alias to set ID CERULEAN MAIN -->
@@ -182,14 +182,14 @@ fcc                       Alias to load, aim and fire cannon at floor*
     
         <!-- Define the alias to set ID CERULEAN ATTACK -->
         <alias
-            match="^skda\sceruleanspell\s(.*?)$"
-            name="setskdceruleanspell"
+            match="^skda\sceruleanatk\s(.*?)$"
+            name="setskdceruleanatk"
             enabled="y"
             group="SKDA"
             omit_from_output="n"
             regexp="y"
             sequence="100"
-            script="SetCeruleanSpell"
+            script="SetCeruleanATK"
         />
     
         <!-- Define the alias to set ID SEAFOAM MAIN -->
@@ -218,14 +218,14 @@ fcc                       Alias to load, aim and fire cannon at floor*
     
         <!-- Define the alias to set ID SEAFOAM ATTACK -->
         <alias
-            match="^skda\sseafoamspell\s(.*?)$"
-            name="setskdseafoamspell"
+            match="^skda\sseafoamatk\s(.*?)$"
+            name="setskdseafoamatk"
             enabled="y"
             group="SKDA"
             omit_from_output="n"
             regexp="y"
             sequence="100"
-            script="SetSeafoamSpell"
+            script="SetSeafoamATK"
         />
     
         <!-- Define the alias to set ID SKD BAG -->
@@ -893,9 +893,9 @@ fcc                       Alias to load, aim and fire cannon at floor*
         local _CeruleanDual = "ceruleandual"
         local _SeafoamWeapon = "seafoamweapon"
         local _SeafoamDual = "seafoamdual"
-        local _LilacSpell = "lilacspell"
-        local _CeruleanSpell = "ceruleanspell"
-        local _SeafoamSpell = "seafoamspell"
+        local _LilacATK = "lilacatk"
+        local _CeruleanATK = "ceruleanatk"
+        local _SeafoamATK = "seafoamatk"
         local _WeaponBag = "bag"
         local _ShieldSKD = "shield"
         local _HoldSKD = "hold"
@@ -997,9 +997,9 @@ fcc                       Alias to load, aim and fire cannon at floor*
                 ColourNote("lightcyan", "", "skda seafoam        - ", "white", "", "Set to ID: ", "yellow", "", _SeafoamWeapon)
                 ColourNote("lightcyan", "", "skda seafoamdual    - ", "white", "", "Set to ID: ", "yellow", "", _SeafoamDual)
                 ColourNote("white", "", "", "white", "", "")
-                ColourNote("lightcyan", "", "skda lilacspell     - ", "white", "", "Set to ID: ", "magenta", "", _LilacSpell)
-                ColourNote("lightcyan", "", "skda ceruleanspell  - ", "white", "", "Set to ID: ", "skyblue", "", _CeruleanSpell)
-                ColourNote("lightcyan", "", "skda seafoamspell   - ", "white", "", "Set to ID: ", "yellow", "", _SeafoamSpell)
+                ColourNote("lightcyan", "", "skda lilacatk       - ", "white", "", "Set to ID: ", "magenta", "", _LilacATK)
+                ColourNote("lightcyan", "", "skda ceruleanatk    - ", "white", "", "Set to ID: ", "skyblue", "", _CeruleanATK)
+                ColourNote("lightcyan", "", "skda seafoamatk     - ", "white", "", "Set to ID: ", "yellow", "", _SeafoamATK)
                 ColourNote("white", "", "", "white", "", "")         
                 ColourNote("lightcyan", "", "skda bag            - ", "white", "", "Set to ID: ", "hotpink", "", _WeaponBag)
                 ColourNote("lightcyan", "", "skda shield         - ", "white", "", "Set to ID: ", "orangered", "", _ShieldSKD)
@@ -1036,16 +1036,16 @@ fcc                       Alias to load, aim and fire cannon at floor*
             Note("Lilac offhand weapon ID is: " .. _LilacDual)
         end
         
-        function SetLilacSpell(name, line, wildcards)
-            _LilacSpell = wildcards[1]
-            Note("Lilac attack ID has been set to: " .. _LilacSpell)
+        function SetLilacATK(name, line, wildcards)
+            _LilacATK = wildcards[1]
+            Note("Lilac attack ID has been set to: " .. _LilacATK)
         end
         
-        function ShowLilacSpell()
-            if not _LilacSpell then
-                _LilacSpell = "empty"
+        function ShowLilacATK()
+            if not _LilacATK then
+                _LilacATK = "empty"
             end
-            Note("Lilac attack ID is: " .. _LilacSpell)
+            Note("Lilac attack ID is: " .. _LilacATK)
         end
         
         -- SETTING THE ID FOR CERULEAN WEAPONS
@@ -1073,16 +1073,16 @@ fcc                       Alias to load, aim and fire cannon at floor*
             Note("Cerulean offhand weapon ID is: " .. _CeruleanDual)
         end
         
-        function SetCeruleanSpell(name, line, wildcards)
-            _CeruleanSpell = wildcards[1]
-            Note("Cerulean attack ID has been set to: " .. _CeruleanSpell)
+        function SetCeruleanATK(name, line, wildcards)
+            _CeruleanATK = wildcards[1]
+            Note("Cerulean attack ID has been set to: " .. _CeruleanATK)
         end
         
-        function ShowCeruleanSpell()
-            if not _CeruleanSpell then
-                _CeruleanSpell = "empty"
+        function ShowCeruleanATK()
+            if not _CeruleanATK then
+                _CeruleanATK = "empty"
             end
-            Note("Cerulean attack ID is: " .. _CeruleanSpell)
+            Note("Cerulean attack ID is: " .. _CeruleanATK)
         end
         
         -- SETTING THE ID FOR SEAFOAM WEAPONS
@@ -1110,16 +1110,16 @@ fcc                       Alias to load, aim and fire cannon at floor*
             Note("Seafoam offhand weapon ID is: " .. _SeafoamDual)
         end
         
-        function SetSeafoamSpell(name, line, wildcards)
-            _SeafoamSpell = wildcards[1]
-            Note("Seafoam attack ID has been set to: " .. _SeafoamSpell)
+        function SetSeafoamATK(name, line, wildcards)
+            _SeafoamATK = wildcards[1]
+            Note("Seafoam attack ID has been set to: " .. _SeafoamATK)
         end
         
-        function ShowSeafoamSpell()
-            if not _SeafoamSpell then
-                _SeafoamSpell = "empty"
+        function ShowSeafoamATK()
+            if not _SeafoamATK then
+                _SeafoamATK = "empty"
             end
-            Note("Seafoam attack ID is: " .. _SeafoamSpell)
+            Note("Seafoam attack ID is: " .. _SeafoamATK)
         end
         
         -- Set the Shield ID
@@ -1180,7 +1180,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
             return false
         end
          
-        -- Handle pylon colors and weapon/spell swaps
+        -- Handle pylon colors and weapon/attacks swaps
         function PylonColorsTrigger(name, line, wildcards, styles)
             if not pylonPhaseTriggered then
                 PylonPhaseTrigger(name, line, wildcards, styles)
@@ -1217,7 +1217,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
                 SendNoEcho("wield " .. _LilacWeapon)
                 SendNoEcho("get " .. _LilacDual .. " " .. _WeaponBag)
                 SendNoEcho("second " .. _LilacDual)
-                SendNoEcho("alias cc " .. _LilacSpell .. " pylon")
+                SendNoEcho("alias cc " .. _LilacATK .. " pylon")
          
             elseif contains(_ceruleanColors, currentColor) then
                 local cmsg = "@C(@DSKD@C) @WDamage types for cerulean crystal pylon: @BLight@W, @BBash@W, @BEnergy@W, @BFire@W, @BAcid @Wor @BEarth@w"
@@ -1234,7 +1234,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
                 SendNoEcho("wield " .. _CeruleanWeapon)
                 SendNoEcho("get " .. _CeruleanDual .. " " .. _WeaponBag)
                 SendNoEcho("second " .. _CeruleanDual)
-                SendNoEcho("alias cc " .. _CeruleanSpell .. " pylon")
+                SendNoEcho("alias cc " .. _CeruleanATK .. " pylon")
          
             elseif contains(_seafoamColors, currentColor) then
                 local smsg = "@C(@DSKD@C) @WDamage types for seafoam crystal pylon: @YMental@W, @YMagic@W, @YPierce@W, @YCold@W, @YShadow @Wor @YWater@w"
@@ -1251,7 +1251,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
                 SendNoEcho("wield " .. _SeafoamWeapon)
                 SendNoEcho("get " .. _SeafoamDual .. " " .. _WeaponBag)
                 SendNoEcho("second " .. _SeafoamDual)
-                SendNoEcho("alias cc " .. _SeafoamSpell .. " pylon")
+                SendNoEcho("alias cc " .. _SeafoamATK .. " pylon")
             end
         end
          
@@ -2333,9 +2333,9 @@ fcc                       Alias to load, aim and fire cannon at floor*
             _CeruleanDual = GetVariable("Save_CeruleanDual") or "empty"
             _SeafoamWeapon= GetVariable("Save_SeafoamWeapon") or "empty"
             _SeafoamDual = GetVariable("Save_SeafoamDual") or "empty"
-            _LilacSpell = GetVariable("Save_LilacSpell") or "empty"
-            _CeruleanSpell = GetVariable("Save_CeruleanSpell") or "empty"
-            _SeafoamSpell = GetVariable("Save_SeafoamSpell") or "empty"
+            _LilacATK = GetVariable("Save_LilacATK") or "empty"
+            _CeruleanATK = GetVariable("Save_CeruleanATK") or "empty"
+            _SeafoamATK = GetVariable("Save_SeafoamATK") or "empty"
             _WeaponBag = GetVariable("Save_WeaponBag") or "empty"
             _ShieldSKD = GetVariable("Save_ShieldSKD") or "empty"
             _HoldSKD = GetVariable("Save_HoldSKD") or "empty" 
@@ -2350,9 +2350,9 @@ fcc                       Alias to load, aim and fire cannon at floor*
             SetVariable("Save_CeruleanDual", _CeruleanDual)
             SetVariable("Save_SeafoamWeapon", _SeafoamWeapon)
             SetVariable("Save_SeafoamDual", _SeafoamDual)
-            SetVariable("Save_LilacSpell", _LilacSpell)
-            SetVariable("Save_CeruleanSpell", _CeruleanSpell)	 
-            SetVariable("Save_SeafoamSpell", _SeafoamSpell)
+            SetVariable("Save_LilacATK", _LilacATK)
+            SetVariable("Save_CeruleanATK", _CeruleanATK)	 
+            SetVariable("Save_SeafoamATK", _SeafoamATK)
             SetVariable("Save_WeaponBag", _WeaponBag)
             SetVariable("Save_ShieldSKD", _ShieldSKD)
             SetVariable("Save_HoldSKD", _HoldSKD)

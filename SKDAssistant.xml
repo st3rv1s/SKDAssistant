@@ -24,9 +24,9 @@
             
 --------------------------[SKD Assistant Helpfile]--------------------------
 
-skda info                 Toggle extra information broadcasts
-skda channel x            Change channel for the broadcasts 
-skda update check         Check if there is a new version
+skda info                 Toggle extra informational broadcasts
+skda channel x            Change channel of the broadcasts 
+skda update check         Check if there is a new version available
 skda update install       Install new version from Github
 skda settings             Show the configured settings
 skda help                 Outputs the helpfile of this plugin
@@ -34,24 +34,24 @@ skda help                 Outputs the helpfile of this plugin
 -------------------------[SKD Assistant Weapons]--------------------------
 
 skda lilac x              Set the ID of lilac main weapon
-skda lilacdual x          Set the ID of lilac offhand weapon
+skda lilacdual x          Set the ID of lilac off-hand weapon
 skda lilacatk x           Set the ID of lilac attack*
 
-Vulnerable to: Slash, Sonic, Electric, Air, Holy, Acid or Negative
+vulnerable to: Slash, Sonic, Electric, Air, Holy, Acid or Negative
 
 skda cerulean x           Set the ID of cerulean main weapon
-skda ceruleandual x       Set the ID of cerulean offhand weapon
+skda ceruleandual x       Set the ID of cerulean off-hand weapon
 skda ceruleantk x         Set the ID of cerulean attack*
 
-Vulnerable to: Light, Bash, Energy, Fire or Earth
+vulnerable to: Light, Bash, Energy, Fire or Earth
 
 skda seafoam x            Set the ID of seafoam main weapon
-skda seafoamdual x        Set the ID of seafoam offhand weapon
+skda seafoamdual x        Set the ID of seafoam off-hand weapon
 skda seafoamatk x         Set the ID of seafoam attack*
 
-Vulnerable to: Mental, Magic, Pierce, Cold, Shadow or Water
+vulnerable to: Mental, Magic, Pierce, Cold, Shadow or Water
 
-skda bag (x)              Set/Show the ID of the bag holding the weapons
+skda bag x                Set the ID of the weapon bag
 skda shield x             Set the ID of your shield
 skda hold x               Set the ID of your hold
 
@@ -62,9 +62,10 @@ skda hold x               Set the ID of your hold
 lizstop                   Manually stops Lizaan timer if needed
 pylstop                   Manually stops Pylon timer if needed
 cc                        Alias to attack pylon after weapon swap
-ml                        Alias to broadcast good moonlight location
 fc                        Alias to load, aim and fire cannon at ceiling*
 fcc                       Alias to load, aim and fire cannon at floor*
+ml                        Alias to manually broadcast good moonlight location
+                          from current room.
 
 * these commands will run you back to the cannon and fire it.
 

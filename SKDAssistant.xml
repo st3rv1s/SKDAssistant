@@ -299,6 +299,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
         <!-- Define the alias for reporting GOOD MOONLIGHT -->
         <alias
             match="^ml$"
+			name="ManualML"
             enabled="y"
             group="SKDA"
             regexp="y"
@@ -1423,7 +1424,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
             -- Disable the trigger after it has been triggered
             EnableTrigger("CannonReportTrigger", false)
             EnableTrigger("BadMLTrigger", false)
-			EnableTrigger("GoodMLReport", false)
+			EnableAlias("ManualML", false)
 			EnableTrigger("AutoGoodMLTrigger", false)
 		
             -- Check if PylonPhaseTrigger has been called
@@ -1606,6 +1607,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
         -- Function that checks for BAD MOONLIGHT REPORT
         function BadMLTrigger(name, line, wildcards, styles)
 			EnableTrigger("AutoGoodMLTrigger", false)
+			EnableAlias("ManualML", false)
             -- Initialize the reported rooms table and count if not already initialized
             if not reported_rooms then
                 reported_rooms = {}
@@ -1645,6 +1647,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
                                         
                     if reported_count >= 2 then    
                         EnableTrigger("BadMLTrigger", false)
+						EnableAlias("ManualML", true)
                         EnableTrigger("AutoGoodMLTrigger", true) -- Enable the AutoGoodMLTrigger after 2 bad rooms
                     end
                 end
@@ -1763,12 +1766,11 @@ fcc                       Alias to load, aim and fire cannon at floor*
 			local position_msg = " @WPosition @RSea King @Wat " .. formatted_connections .. "@Y"
             
             -- Send the messages separately
-                if _skdaINFO == "OFF" then
-                    SendNoEcho("gtell " .. msg)
-                else
-                    SendNoEcho("gtell " .. msg .. position_msg)
-                end
-
+            if _skdaINFO == "OFF" then
+                SendNoEcho("gtell " .. msg)
+            else
+                SendNoEcho("gtell " .. msg .. position_msg)
+            end
         end
                 
         -- Function that echoes instructions for GOOD MOONLIGHT
@@ -1788,7 +1790,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
             -- Common actions for this case
             EnableTrigger("CannonReportTrigger", false)
             EnableTrigger("BadMLTrigger", false)
-			EnableAlias("GoodMLReport", false)
+			EnableAlias("ManualML", false)
 			EnableTrigger("AutoGoodMLTrigger", false)			
 			
             SendNoEcho(_Channel .. " @C(@DSKD@C) @RHEAL @WPhase confirmed!@Y")
@@ -1828,7 +1830,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
 			-- Common actions for this case
             EnableTrigger("CannonReportTrigger", true)
             EnableTrigger("BadMLTrigger", false)
-			EnableAlias("GoodMLReport", false)
+			EnableAlias("ManualML", false)
 			EnableTrigger("AutoGoodMLTrigger", false)	
             
             SendNoEcho(_Channel .. " @C(@DSKD@C) @WPhase incoming: @MPylon @Wor @RHeal@Y")
@@ -1848,6 +1850,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
 			-- Common actions for this case
             EnableTrigger("CannonReportTrigger", false)
 			EnableTrigger("BadMLTrigger", true)
+			EnableAlias("ManualML", true)
 			EnableTrigger("GoodMLTrigger", true)
 			EnableTrigger("AutoGoodMLTrigger", false)
             
@@ -1897,6 +1900,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
             SendNoEcho("gtell " .. msg)
         
             -- Disable the trigger to prevent it from firing again
+			EnableAlias("ManualML", false)
             EnableTrigger("KillPhaseTrigger", false)
         end
         
@@ -1926,7 +1930,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
 			EnableTrigger("KillPhaseTrigger", true)
             EnableTrigger("CannonReportTrigger", true)
 			EnableTrigger("BadMLTrigger", true)
-			EnableAlias("GoodMLReport", false)			
+			EnableAlias("ManualML", true)			
 			EnableTrigger("AutoGoodMLTrigger", false)
             EnableTrigger("VisionBlurringTrigger", true)
             
@@ -1950,7 +1954,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
 			EnableTrigger("KillPhaseTrigger", true)
             EnableTrigger("CannonReportTrigger", true)
 			EnableTrigger("BadMLTrigger", true)
-			EnableAlias("GoodMLReport", false)
+			EnableAlias("ManualML", true)
 			EnableTrigger("AutoGoodMLTrigger", false)
             EnableTrigger("VisionBlurringTrigger", true)
                        
@@ -1974,7 +1978,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
 			EnableTrigger("KillPhaseTrigger", true)
             EnableTrigger("CannonReportTrigger", false)
 			EnableTrigger("BadMLTrigger", true)
-			EnableAlias("GoodMLReport", false)
+			EnableAlias("ManualML", false)
 			EnableTrigger("AutoGoodMLTrigger", false)
         end
         
@@ -1997,7 +2001,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
                 EnableTrigger("KillPhaseTrigger", true)
 				EnableTrigger("CannonReportTrigger", false)
 				EnableTrigger("BadMLTrigger", false)
-				EnableAlias("GoodMLReport", false)
+				EnableAlias("ManualML", true)
 				EnableTrigger("AutoGoodMLTrigger", false)
 				EnableTrigger("LizaanTrigger", true) 
                 
@@ -2034,7 +2038,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
             EnableTrigger("KillPhaseTrigger", true)
 			EnableTrigger("CannonReportTrigger", false)
 			EnableTrigger("BadMLTrigger", false)
-			EnableAlias("GoodMLReport", false)
+			EnableAlias("ManualML", true)
 			EnableTrigger("AutoGoodMLTrigger", false)
 			EnableTrigger("LizaanTrigger", true) 			
             

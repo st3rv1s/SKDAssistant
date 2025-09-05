@@ -17,7 +17,7 @@
         date_written="2024-7-24 17:59:57"
         save_state="y"
         requires="5.07"
-        version="1.33"
+        version="1.34"
     >
         <description trim="y">
             <![CDATA[ 
@@ -456,6 +456,19 @@ fcc                       Alias to load, aim and fire cannon at floor*
             script="CannonSpawnTrigger"
         />
     
+        <!-- Trigger for CANNON FIRE -->
+        <trigger
+            name="CannonFireTrigger"
+            match="^You smash the firing button and the cannon looses a blast of energy above!$"
+            enabled="y"
+            group="SKDA"
+            regexp="y"
+            send_to="12"
+            ignore_case="y"
+            sequence="100"
+            script="CannonFire"
+        />
+
         <!-- Trigger for CANNON HIT -->
         <trigger
             name="CannonHitTrigger"
@@ -526,7 +539,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
         <!-- Trigger FOR SUCCESFUL PLAYER TAUNT -->
         <trigger
             name="PlayerTaunt"
-            match="^From somewhere nearby, you hear (.*?) shout ridiculous insults at the Sea King.$"
+            match="^From somewhere nearby, you hear (.*?) shout ridiculous insults at the Sea King.|^(.*?) shouts ridiculous insults at the Sea King, whose face reddens with rage.$"
             enabled="y"
             group="SKDA"
             regexp="y"
@@ -886,6 +899,8 @@ fcc                       Alias to load, aim and fire cannon at floor*
         local _WeaponBag = "bag"
         local _ShieldSKD = "shield"
         local _HoldSKD = "hold"
+		local self_taunt_active = false
+		local self_fired_active = false
 	local startTime = 0
 	local endTime = 0 
 						
@@ -1516,20 +1531,40 @@ fcc                       Alias to load, aim and fire cannon at floor*
         if trigger_count == nil then
             trigger_count = 0
         end
+		
+        -- Function that checks for CANNON FIRE
+        function CannonFire(name, line, wildcards, styles)
+						
+			self_fired_active = true
+        end
         
         -- Function that checks for CANNON HIT
         function CannonHitTrigger(name, line, wildcards, styles)
-            SendNoEcho(_Channel .." @C(@DSKD@C) @WCannon @GHITS @Wthe @RSea King@W!@Y")
+			if self_fired_active then
+				SendNoEcho(_Channel .." @C(@DSKD@C) @WCannon @GHITS @Wthe @RSea King@W!@Y")
+			end
+			
+			self_fired_active = false
         end
         
         -- Function that checks for CANNON DIRECT HIT
         function DirectHitTrigger(name, line, wildcards, styles)
-            SendNoEcho(_Channel .. " @C(@DSKD@C) @WCannon @GDIRECTLY HITS @Wthe @RSea King@W!@Y")
+		
+			if self_fired_active then
+				SendNoEcho(_Channel .. " @C(@DSKD@C) @WCannon @GDIRECTLY HITS @Wthe @RSea King@W!@Y")
+			end
+			
+			self_fired_active = false
         end
         
         -- Function that checks for CANNON MISS
         function CannonMissTrigger(name, line, wildcards, styles)
-            SendNoEcho(_Channel .. " @C(@DSKD@C) @WCannon @RMISSES @Wthe @RSea King@W!@Y")
+		
+			if self_fired_active then
+				SendNoEcho(_Channel .. " @C(@DSKD@C) @WCannon @RMISSES @Wthe @RSea King@W!@Y")
+			end
+			
+			self_fired_active = false
         end
         
         -- Function that checks for AGGRO
@@ -1585,19 +1620,27 @@ fcc                       Alias to load, aim and fire cannon at floor*
             reported_count = 0
 			EnableTrigger("BadMLTrigger", true)
 			EnableTrigger("AutoGoodMLTrigger", false)
+			
+			if self_taunt_active then
             SendNoEcho(_Channel .. " @C(@DSKD@C) @YTaunt @GHIT @Won the @RSea King@W!@Y")
+			end
+			
+			self_taunt_active = false
         end
         
         -- Function that checks for SUCCESSFUL PLAYER TAUNT
         function PlayerTaunt(name, line, wildcards, styles)
+			self_taunt_active = false
             reported_rooms = {}
             reported_count = 0
+			
 			EnableTrigger("BadMLTrigger", true)
 			EnableTrigger("AutoGoodMLTrigger", false)
         end
         
         -- Function that checks for SelfTaunt
         function SelfTaunt(name, line, wildcards, styles)
+			self_taunt_active = true
             reported_rooms = {}
             reported_count = 0
 			EnableTrigger("BadMLTrigger", true)
@@ -1647,7 +1690,13 @@ fcc                       Alias to load, aim and fire cannon at floor*
                                         
                     if reported_count >= 2 then    
                         EnableTrigger("BadMLTrigger", false)
-						EnableAlias("ManualML", true)
+						
+						if GetTriggerInfo("PhaseEndTrigger", 1) then
+							EnableAlias("ManualML", false)
+						else
+							EnableAlias("ManualML", true)
+						end
+						
                         EnableTrigger("AutoGoodMLTrigger", true) -- Enable the AutoGoodMLTrigger after 2 bad rooms
                     end
                 end
@@ -1771,6 +1820,8 @@ fcc                       Alias to load, aim and fire cannon at floor*
             else
                 SendNoEcho("gtell " .. msg .. position_msg)
             end
+			
+			EnableAlias("ManualML", true)
         end
                 
         -- Function that echoes instructions for GOOD MOONLIGHT
@@ -1850,7 +1901,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
 			-- Common actions for this case
             EnableTrigger("CannonReportTrigger", false)
 			EnableTrigger("BadMLTrigger", true)
-			EnableAlias("ManualML", true)
+			EnableAlias("ManualML", false)
 			EnableTrigger("GoodMLTrigger", true)
 			EnableTrigger("AutoGoodMLTrigger", false)
             
@@ -1930,7 +1981,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
 			EnableTrigger("KillPhaseTrigger", true)
             EnableTrigger("CannonReportTrigger", true)
 			EnableTrigger("BadMLTrigger", true)
-			EnableAlias("ManualML", true)			
+			EnableAlias("ManualML", false)			
 			EnableTrigger("AutoGoodMLTrigger", false)
             EnableTrigger("VisionBlurringTrigger", true)
             
@@ -1954,7 +2005,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
 			EnableTrigger("KillPhaseTrigger", true)
             EnableTrigger("CannonReportTrigger", true)
 			EnableTrigger("BadMLTrigger", true)
-			EnableAlias("ManualML", true)
+			EnableAlias("ManualML", false)
 			EnableTrigger("AutoGoodMLTrigger", false)
             EnableTrigger("VisionBlurringTrigger", true)
                        
@@ -1974,7 +2025,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
 			reported_rooms = {}  -- Reset the reported rooms
             reported_count = 0   -- Reset the reported count
 			trigger_count = 0
-			
+		
 			EnableTrigger("KillPhaseTrigger", true)
             EnableTrigger("CannonReportTrigger", false)
 			EnableTrigger("BadMLTrigger", true)
@@ -2001,7 +2052,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
                 EnableTrigger("KillPhaseTrigger", true)
 				EnableTrigger("CannonReportTrigger", false)
 				EnableTrigger("BadMLTrigger", false)
-				EnableAlias("ManualML", true)
+				EnableAlias("ManualML", false)
 				EnableTrigger("AutoGoodMLTrigger", false)
 				EnableTrigger("LizaanTrigger", true) 
                 
@@ -2038,7 +2089,7 @@ fcc                       Alias to load, aim and fire cannon at floor*
             EnableTrigger("KillPhaseTrigger", true)
 			EnableTrigger("CannonReportTrigger", false)
 			EnableTrigger("BadMLTrigger", false)
-			EnableAlias("ManualML", true)
+			EnableAlias("ManualML", false)
 			EnableTrigger("AutoGoodMLTrigger", false)
 			EnableTrigger("LizaanTrigger", true) 			
             

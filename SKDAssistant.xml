@@ -17,7 +17,7 @@
         date_written="2024-7-24 17:59:57"
         save_state="y"
         requires="5.07"
-        version="1.34"
+        version="1.35"
     >
         <description trim="y">
             <![CDATA[ 
@@ -41,7 +41,7 @@ vulnerable to: Slash, Sonic, Electric, Air, Holy, Acid or Negative
 
 skda cerulean x           Set the ID of cerulean main weapon
 skda ceruleandual x       Set the ID of cerulean off-hand weapon
-skda ceruleantk x         Set the ID of cerulean attack*
+skda ceruleanatk x        Set the ID of cerulean attack*
 
 vulnerable to: Light, Bash, Energy, Fire or Earth
 
@@ -64,7 +64,7 @@ pylstop                   Manually stops Pylon timer if needed
 cc                        Alias to attack pylon after weapon swap
 fc                        Alias to load, aim and fire cannon at ceiling*
 fcc                       Alias to load, aim and fire cannon at floor*
-ml                        Alias to manually broadcast good moonlight location
+ml                       Alias to manually broadcast good moonlight location
                           from current room.
 
 * these commands will run you back to the cannon and fire it.
@@ -672,6 +672,19 @@ ml                        Alias to manually broadcast good moonlight location
         />
     
         <!-- Trigger for EPIC STATUS -->
+		
+        <!-- Trigger for SKD PRESTART -->
+        <trigger
+            name="PrepareSKD"
+            match="^Perhaps you should investigate what lies ahead\.$"
+            enabled="y"
+            group="SKDA"
+            regexp="y"
+            send_to="12"
+            ignore_case="y"
+            sequence="100"
+            script="PrepareSKD"
+        />
     
         <!-- Trigger for SKD START -->
         <trigger
@@ -1214,9 +1227,10 @@ ml                        Alias to manually broadcast good moonlight location
 					end
 				end
 				
-                SendNoEcho("get " .. _LilacWeapon .. " " .. _WeaponBag)
+                --SendNoEcho("get " .. _LilacWeapon .. " " .. _WeaponBag)
+				SendNoEcho("remove second")
                 SendNoEcho("wield " .. _LilacWeapon)
-                SendNoEcho("get " .. _LilacDual .. " " .. _WeaponBag)
+                --SendNoEcho("get " .. _LilacDual .. " " .. _WeaponBag)
                 SendNoEcho("second " .. _LilacDual)
                 SendNoEcho("alias cc " .. _LilacATK .. " pylon")
          
@@ -1231,9 +1245,10 @@ ml                        Alias to manually broadcast good moonlight location
 					end
 				end
 				
-                SendNoEcho("get " .. _CeruleanWeapon .. " " .. _WeaponBag)
+               --SendNoEcho("get " .. _CeruleanWeapon .. " " .. _WeaponBag)
+				SendNoEcho("remove second")
                 SendNoEcho("wield " .. _CeruleanWeapon)
-                SendNoEcho("get " .. _CeruleanDual .. " " .. _WeaponBag)
+                --SendNoEcho("get " .. _CeruleanDual .. " " .. _WeaponBag)
                 SendNoEcho("second " .. _CeruleanDual)
                 SendNoEcho("alias cc " .. _CeruleanATK .. " pylon")
          
@@ -1248,9 +1263,10 @@ ml                        Alias to manually broadcast good moonlight location
 					end
 				end
 				
-                SendNoEcho("get " .. _SeafoamWeapon .. " " .. _WeaponBag)
+                --SendNoEcho("get " .. _SeafoamWeapon .. " " .. _WeaponBag)
+				SendNoEcho("remove second")
                 SendNoEcho("wield " .. _SeafoamWeapon)
-                SendNoEcho("get " .. _SeafoamDual .. " " .. _WeaponBag)
+                --SendNoEcho("get " .. _SeafoamDual .. " " .. _WeaponBag)
                 SendNoEcho("second " .. _SeafoamDual)
                 SendNoEcho("alias cc " .. _SeafoamATK .. " pylon")
             end
@@ -1440,7 +1456,6 @@ ml                        Alias to manually broadcast good moonlight location
             -- Disable the trigger after it has been triggered
             EnableTrigger("CannonReportTrigger", false)
             EnableTrigger("BadMLTrigger", false)
-			EnableAlias("ManualML", false)
 			EnableTrigger("AutoGoodMLTrigger", false)
 		
             -- Check if PylonPhaseTrigger has been called
@@ -1651,7 +1666,6 @@ ml                        Alias to manually broadcast good moonlight location
         -- Function that checks for BAD MOONLIGHT REPORT
         function BadMLTrigger(name, line, wildcards, styles)
 			EnableTrigger("AutoGoodMLTrigger", false)
-			EnableAlias("ManualML", false)
             -- Initialize the reported rooms table and count if not already initialized
             if not reported_rooms then
                 reported_rooms = {}
@@ -1688,17 +1702,11 @@ ml                        Alias to manually broadcast good moonlight location
                     else
                         cnote(bmmsg)
                     end					
-                                        
+                             
+					-- Enable the AutoGoodMLTrigger after 2 bad rooms							 
                     if reported_count >= 2 then    
                         EnableTrigger("BadMLTrigger", false)
-						
-						if GetTriggerInfo("PhaseEndTrigger", 1) then
-							EnableAlias("ManualML", false)
-						else
-							EnableAlias("ManualML", true)
-						end
-						
-                        EnableTrigger("AutoGoodMLTrigger", true) -- Enable the AutoGoodMLTrigger after 2 bad rooms
+                        EnableTrigger("AutoGoodMLTrigger", true) 
                     end
                 end
             end
@@ -1822,13 +1830,19 @@ ml                        Alias to manually broadcast good moonlight location
                 SendNoEcho("gtell " .. msg .. position_msg)
             end
 			
-			EnableAlias("ManualML", true)
         end
                 
         -- Function that echoes instructions for GOOD MOONLIGHT
         function GoodMLReport(name, line, wildcards, styles)
-            mgmlmsg = "@C(@DSKD@C) @WType '@Cml@W' to manually report @Ggood @Wmoonlight if it has @Rmoved@W!@w"           
-            cnote(mgmlmsg)   
+			mgmlmsg = "@C(@DSKD@C) @WType '@Cml@W' to manually report @Ggood @Wmoonlight if it has @Rmoved@W!@w" 
+
+			if _skdaINFO == "ON" then
+				if MinorToggle == "true" then 
+					sendMessage(mgmlmsg)
+				else 
+					cnote(mgmlmsg) 
+				end
+			end
         end
 				
         -- Function that checks for HEAL PHASE CONFIRM
@@ -1842,7 +1856,6 @@ ml                        Alias to manually broadcast good moonlight location
             -- Common actions for this case
             EnableTrigger("CannonReportTrigger", false)
             EnableTrigger("BadMLTrigger", false)
-			EnableAlias("ManualML", false)
 			EnableTrigger("AutoGoodMLTrigger", false)			
 			
             SendNoEcho(_Channel .. " @C(@DSKD@C) @RHEAL @WPhase confirmed!@Y")
@@ -1880,9 +1893,9 @@ ml                        Alias to manually broadcast good moonlight location
             trigger_count = 0
 			
 			-- Common actions for this case
+			EnableAlias("ManualML", false)
             EnableTrigger("CannonReportTrigger", true)
             EnableTrigger("BadMLTrigger", false)
-			EnableAlias("ManualML", false)
 			EnableTrigger("AutoGoodMLTrigger", false)	
             
             SendNoEcho(_Channel .. " @C(@DSKD@C) @WPhase incoming: @MPylon @Wor @RHeal@Y")
@@ -1900,9 +1913,9 @@ ml                        Alias to manually broadcast good moonlight location
             trigger_count = 0
 			
 			-- Common actions for this case
+			EnableAlias("ManualML", true)
             EnableTrigger("CannonReportTrigger", false)
 			EnableTrigger("BadMLTrigger", true)
-			EnableAlias("ManualML", false)
 			EnableTrigger("GoodMLTrigger", true)
 			EnableTrigger("AutoGoodMLTrigger", false)
             
@@ -1966,6 +1979,16 @@ ml                        Alias to manually broadcast good moonlight location
         function endTimer()
            endTime = os.clock() - startTime
         end		
+		
+        -- Function to prepare SKD Start
+        function PrepareSKD(name, line, wildcards, styles)
+		    SendNoEcho("get " .. _LilacWeapon .. " " .. _WeaponBag)
+            SendNoEcho("get " .. _LilacDual .. " " .. _WeaponBag)
+            SendNoEcho("get " .. _CeruleanWeapon .. " " .. _WeaponBag)
+            SendNoEcho("get " .. _CeruleanDual .. " " .. _WeaponBag)
+	        SendNoEcho("get " .. _SeafoamWeapon .. " " .. _WeaponBag)
+            SendNoEcho("get " .. _SeafoamDual .. " " .. _WeaponBag)
+		end
         
         -- Function to handle SKD Start
         function TreasuryEntryTrigger(name, line, wildcards, styles)
@@ -1981,8 +2004,8 @@ ml                        Alias to manually broadcast good moonlight location
 			
 			EnableTrigger("KillPhaseTrigger", true)
             EnableTrigger("CannonReportTrigger", true)
-			EnableTrigger("BadMLTrigger", true)
-			EnableAlias("ManualML", false)			
+			EnableAlias("ManualML", true)
+			EnableTrigger("BadMLTrigger", true)		
 			EnableTrigger("AutoGoodMLTrigger", false)
             EnableTrigger("VisionBlurringTrigger", true)
             
@@ -2006,11 +2029,16 @@ ml                        Alias to manually broadcast good moonlight location
 			EnableTrigger("KillPhaseTrigger", true)
             EnableTrigger("CannonReportTrigger", true)
 			EnableTrigger("BadMLTrigger", true)
-			EnableAlias("ManualML", false)
 			EnableTrigger("AutoGoodMLTrigger", false)
             EnableTrigger("VisionBlurringTrigger", true)
                        
             -- Send message indicating the epic has started
+            SendNoEcho("get " .. _LilacWeapon .. " " .. _WeaponBag)
+            SendNoEcho("get " .. _LilacDual .. " " .. _WeaponBag)
+            SendNoEcho("get " .. _CeruleanWeapon .. " " .. _WeaponBag)
+            SendNoEcho("get " .. _CeruleanDual .. " " .. _WeaponBag)
+	        SendNoEcho("get " .. _SeafoamWeapon .. " " .. _WeaponBag)
+            SendNoEcho("get " .. _SeafoamDual .. " " .. _WeaponBag)
             SendNoEcho("autoassist off")
             SendNoEcho("nofollow")			
             SendNoEcho(_Channel .. " @C(@DSKD@C) @WEpic has @Gstarted@W. Good luck and enjoy!@Y")
@@ -2030,7 +2058,6 @@ ml                        Alias to manually broadcast good moonlight location
 			EnableTrigger("KillPhaseTrigger", true)
             EnableTrigger("CannonReportTrigger", false)
 			EnableTrigger("BadMLTrigger", true)
-			EnableAlias("ManualML", false)
 			EnableTrigger("AutoGoodMLTrigger", false)
         end
         
@@ -2053,7 +2080,6 @@ ml                        Alias to manually broadcast good moonlight location
                 EnableTrigger("KillPhaseTrigger", true)
 				EnableTrigger("CannonReportTrigger", false)
 				EnableTrigger("BadMLTrigger", false)
-				EnableAlias("ManualML", false)
 				EnableTrigger("AutoGoodMLTrigger", false)
 				EnableTrigger("LizaanTrigger", true) 
                 
@@ -2090,12 +2116,17 @@ ml                        Alias to manually broadcast good moonlight location
             EnableTrigger("KillPhaseTrigger", true)
 			EnableTrigger("CannonReportTrigger", false)
 			EnableTrigger("BadMLTrigger", false)
-			EnableAlias("ManualML", false)
 			EnableTrigger("AutoGoodMLTrigger", false)
 			EnableTrigger("LizaanTrigger", true) 			
             
             -- Handle the riches message
             SendNoEcho(_Channel .. " @C(@DSKD@C) @WThe @RSea King @Wis @RDEAD @Wafter " .. timeString .. "! @GBOW @Wto receive plunder!@Y")
+            SendNoEcho("put " .. _LilacWeapon .. " " .. _WeaponBag)
+            SendNoEcho("put " .. _LilacDual .. " " .. _WeaponBag)
+            SendNoEcho("put " .. _CeruleanWeapon .. " " .. _WeaponBag)
+            SendNoEcho("put " .. _CeruleanDual .. " " .. _WeaponBag)
+	        SendNoEcho("put " .. _SeafoamWeapon .. " " .. _WeaponBag)
+            SendNoEcho("put " .. _SeafoamDual .. " " .. _WeaponBag)
             SendNoEcho("autoassist on")
             SendNoEcho("nofollow")
         end

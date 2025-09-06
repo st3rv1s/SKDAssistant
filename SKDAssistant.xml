@@ -2011,7 +2011,7 @@ ml                       Alias to manually broadcast good moonlight location
             
             -- Send message indicating the epic has started
             SendNoEcho("autoassist off")
-            SendNoEcho("nofollow")
+            SendNoEcho("follow self")
             SendNoEcho(_Channel .. " @C(@DSKD@C) @WEpic has @Gstarted@W. Good luck and enjoy!@Y")
         end
         

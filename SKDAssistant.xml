@@ -17,7 +17,7 @@
         date_written="2024-7-24 17:59:57"
         save_state="y"
         requires="5.07"
-        version="1.37"
+        version="1.38"
     >
         <description trim="y">
             <![CDATA[ 
@@ -1531,7 +1531,7 @@ ml                       Alias to manually broadcast good moonlight location
         		
                 -- Fire the cannon
                 SendNoEcho("load cannon")
-                SendNoEcho("aim ceiling")
+                SendNoEcho("aim floor")
                 SendNoEcho("fire cannon")
                 fcfmsg = "@C(@DSKD@C) @WFired at @RFLOOR@W!"
 				
@@ -2040,7 +2040,7 @@ ml                       Alias to manually broadcast good moonlight location
 	        SendNoEcho("get " .. _SeafoamWeapon .. " " .. _WeaponBag)
             SendNoEcho("get " .. _SeafoamDual .. " " .. _WeaponBag)
             SendNoEcho("autoassist off")
-            SendNoEcho("nofollow")			
+            SendNoEcho("follow self")			
             SendNoEcho(_Channel .. " @C(@DSKD@C) @WEpic has @Gstarted@W. Good luck and enjoy!@Y")
         end
 		
@@ -2088,7 +2088,6 @@ ml                       Alias to manually broadcast good moonlight location
                 -- Handle the player death message
                 SendNoEcho(_Channel .. " @C(@DSKD@C) @WI am @RDEAD@W! Better luck next time.@Y")
                 SendNoEcho("autoassist on")
-                SendNoEcho("nofollow")
             end
         end
         
@@ -2131,7 +2130,6 @@ ml                       Alias to manually broadcast good moonlight location
 	        SendNoEcho("put " .. _SeafoamWeapon .. " " .. _WeaponBag)
             SendNoEcho("put " .. _SeafoamDual .. " " .. _WeaponBag)
             SendNoEcho("autoassist on")
-            SendNoEcho("nofollow")
         end
         
         -- Function to initialize rewards
@@ -2398,5 +2396,6 @@ ml                       Alias to manually broadcast good moonlight location
     </script>
 
 </muclient>
+
 
 

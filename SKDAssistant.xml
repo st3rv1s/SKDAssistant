@@ -64,7 +64,7 @@ pylstop                   Manually stops Pylon timer if needed
 cc                        Alias to attack pylon after weapon swap
 fc                        Alias to load, aim and fire cannon at ceiling*
 fcc                       Alias to load, aim and fire cannon at floor*
-ml                       Alias to manually broadcast good moonlight location
+ml                        Alias to manually broadcast good moonlight location
                           from current room.
 
 * these commands will run you back to the cannon and fire it.
@@ -2396,6 +2396,7 @@ ml                       Alias to manually broadcast good moonlight location
     </script>
 
 </muclient>
+
 
 
 

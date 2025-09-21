@@ -17,7 +17,7 @@
         date_written="2024-7-24 17:59:57"
         save_state="y"
         requires="5.07"
-        version="1.41"
+        version="1.42"
     >
         <description trim="y">
             <![CDATA[ 
@@ -62,8 +62,8 @@ skda hold x               Set the ID of your hold
 lizstop                   Manually stops Lizaan timer if needed
 pylstop                   Manually stops Pylon timer if needed
 cc                        Alias to attack pylon after weapon swap
-fc                        Alias to load, aim and fire cannon at ceiling*
-fcc                       Alias to load, aim and fire cannon at floor*
+fcc                       Alias to load, aim and fire cannon at ceiling*
+fcf                       Alias to load, aim and fire cannon at floor*
 ml                        Alias to manually broadcast good moonlight location
                           from current room.
 
@@ -279,7 +279,7 @@ ml                        Alias to manually broadcast good moonlight location
     
         <!-- Define the alias for aiming the cannon to ceiling -->
         <alias
-            match="^fc"
+            match="^fcc"
             enabled="y"
             group="SKDA"
             regexp="y"
@@ -289,7 +289,7 @@ ml                        Alias to manually broadcast good moonlight location
     
         <!-- Define the alias for aiming the cannon to floor -->
         <alias
-            match="^fcc"
+            match="^fcf"
             enabled="y"
             group="SKDA"
             regexp="y"
@@ -2404,6 +2404,7 @@ ml                        Alias to manually broadcast good moonlight location
     </script>
 
 </muclient>
+
 
 
 

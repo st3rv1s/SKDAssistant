@@ -17,7 +17,7 @@
         date_written="2024-7-24 17:59:57"
         save_state="y"
         requires="5.07"
-        version="1.36"
+        version="1.37"
     >
         <description trim="y">
             <![CDATA[ 
@@ -2072,6 +2072,7 @@ ml                       Alias to manually broadcast good moonlight location
             if playerName and line:match(playerName) and (line:match("the Sea King") or line:match("crystal pylon") or line:match("Lizaan")) then
                 LizaanTimerStop()
                 PylonTimerStop()
+			    lastCannonRoom = nil
 				
                 -- Reset triggers and trigger_count
 				reported_rooms = {}  -- Reset the reported rooms
@@ -2108,6 +2109,7 @@ ml                       Alias to manually broadcast good moonlight location
             -- Reset the pylonPhaseTriggered flag to ensure a fresh start
             resetPylonPhaseTriggerFlag()
 			PylonTimerStop()
+		    lastCannonRoom = nil
 			
             -- Reset triggers and trigger_count
 			reported_rooms = {}  -- Reset the reported rooms
@@ -2396,4 +2398,5 @@ ml                       Alias to manually broadcast good moonlight location
     </script>
 
 </muclient>
+
 

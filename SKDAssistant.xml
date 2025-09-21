@@ -2134,6 +2134,10 @@ ml                        Alias to manually broadcast good moonlight location
 	        SendNoEcho("put " .. _SeafoamWeapon .. " " .. _WeaponBag)
             SendNoEcho("put " .. _SeafoamDual .. " " .. _WeaponBag)
             SendNoEcho("autoassist on")
+		
+			if (gmcp("group.leader") == gmcp("char.base.name")) then
+				SendNoEcho("nofollow")
+			end	
         end
         
         -- Function to initialize rewards
@@ -2400,6 +2404,7 @@ ml                        Alias to manually broadcast good moonlight location
     </script>
 
 </muclient>
+
 
 
 

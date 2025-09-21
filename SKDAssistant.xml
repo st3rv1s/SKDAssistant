@@ -17,7 +17,7 @@
         date_written="2024-7-24 17:59:57"
         save_state="y"
         requires="5.07"
-        version="1.35"
+        version="1.36"
     >
         <description trim="y">
             <![CDATA[ 
@@ -2049,6 +2049,7 @@ ml                       Alias to manually broadcast good moonlight location
             -- Reset the pylonPhaseTriggered flag to ensure a fresh start
             resetPylonPhaseTriggerFlag()
             PylonTimerStop()
+			lastCannonRoom = nil 
             		
             -- Reset triggers and trigger_count
 			reported_rooms = {}  -- Reset the reported rooms
@@ -2395,3 +2396,4 @@ ml                       Alias to manually broadcast good moonlight location
     </script>
 
 </muclient>
+

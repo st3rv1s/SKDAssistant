@@ -17,7 +17,7 @@
         date_written="2024-7-24 17:59:57"
         save_state="y"
         requires="5.07"
-        version="1.39"
+        version="1.4"
     >
         <description trim="y">
             <![CDATA[ 
@@ -2396,6 +2396,7 @@ ml                        Alias to manually broadcast good moonlight location
     </script>
 
 </muclient>
+
 
 
 

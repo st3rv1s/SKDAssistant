@@ -63,7 +63,7 @@ lizstop                   Manually stops Lizaan timer if needed
 pylstop                   Manually stops Pylon timer if needed
 cc                        Alias to attack pylon after weapon swap
 fc                        Alias to load, aim and fire cannon at ceiling*
-fc                        Alias to load, aim and fire cannon at floor*
+ff                        Alias to load, aim and fire cannon at floor*
 ml                        Alias to manually broadcast good moonlight location
                           from current room.
 
@@ -2404,6 +2404,7 @@ ml                        Alias to manually broadcast good moonlight location
     </script>
 
 </muclient>
+
 
 
 

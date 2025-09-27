@@ -17,7 +17,7 @@
         date_written="2024-7-24 17:59:57"
         save_state="y"
         requires="5.07"
-        version="1.43"
+        version="1.44"
     >
         <description trim="y">
             <![CDATA[ 
@@ -63,7 +63,7 @@ lizstop                   Manually stops Lizaan timer if needed
 pylstop                   Manually stops Pylon timer if needed
 cc                        Alias to attack pylon after weapon swap
 fc                        Alias to load, aim and fire cannon at ceiling*
-ff                        Alias to load, aim and fire cannon at floor*
+fc                        Alias to load, aim and fire cannon at floor*
 ml                        Alias to manually broadcast good moonlight location
                           from current room.
 
@@ -1982,12 +1982,25 @@ ml                        Alias to manually broadcast good moonlight location
 		
         -- Function to prepare SKD Start
         function PrepareSKD(name, line, wildcards, styles)
+		
 		    SendNoEcho("get " .. _LilacWeapon .. " " .. _WeaponBag)
             SendNoEcho("get " .. _LilacDual .. " " .. _WeaponBag)
             SendNoEcho("get " .. _CeruleanWeapon .. " " .. _WeaponBag)
             SendNoEcho("get " .. _CeruleanDual .. " " .. _WeaponBag)
 	        SendNoEcho("get " .. _SeafoamWeapon .. " " .. _WeaponBag)
             SendNoEcho("get " .. _SeafoamDual .. " " .. _WeaponBag)
+			
+            SendNoEcho("get " .. _ShieldSKD .. " " .. _WeaponBag)
+            SendNoEcho("wear " .. _ShieldSKD)
+            SendNoEcho("get " .. _HoldSKD .. " " .. _WeaponBag)
+            SendNoEcho("wear " .. _HoldSKD)
+			
+            SendNoEcho("map")
+			SendNoEcho("saffect bad")
+            SendNoEcho("autoassist off")
+            SendNoEcho("follow self")	
+			
+			EnableTrigger("PrepareSKD", false)
 		end
         
         -- Function to handle SKD Start
@@ -2010,8 +2023,6 @@ ml                        Alias to manually broadcast good moonlight location
             EnableTrigger("VisionBlurringTrigger", true)
             
             -- Send message indicating the epic has started
-            SendNoEcho("autoassist off")
-            SendNoEcho("nofollow")
             SendNoEcho(_Channel .. " @C(@DSKD@C) @WEpic has @Gstarted@W. Good luck and enjoy!@Y")
         end
         
@@ -2038,9 +2049,7 @@ ml                        Alias to manually broadcast good moonlight location
             SendNoEcho("get " .. _CeruleanWeapon .. " " .. _WeaponBag)
             SendNoEcho("get " .. _CeruleanDual .. " " .. _WeaponBag)
 	        SendNoEcho("get " .. _SeafoamWeapon .. " " .. _WeaponBag)
-            SendNoEcho("get " .. _SeafoamDual .. " " .. _WeaponBag)
-            SendNoEcho("autoassist off")
-            SendNoEcho("follow self")			
+            SendNoEcho("get " .. _SeafoamDual .. " " .. _WeaponBag)		
             SendNoEcho(_Channel .. " @C(@DSKD@C) @WEpic has @Gstarted@W. Good luck and enjoy!@Y")
         end
 		
@@ -2087,7 +2096,8 @@ ml                        Alias to manually broadcast good moonlight location
 				EnableTrigger("CannonReportTrigger", false)
 				EnableTrigger("BadMLTrigger", false)
 				EnableTrigger("AutoGoodMLTrigger", false)
-				EnableTrigger("LizaanTrigger", true) 
+				EnableTrigger("LizaanTrigger", true)
+				EnableTrigger("PrepareSKD", true)
                 
                 -- Handle the player death message
                 SendNoEcho(_Channel .. " @C(@DSKD@C) @WI am @RDEAD@W! Better luck next time.@Y")
@@ -2123,7 +2133,8 @@ ml                        Alias to manually broadcast good moonlight location
 			EnableTrigger("CannonReportTrigger", false)
 			EnableTrigger("BadMLTrigger", false)
 			EnableTrigger("AutoGoodMLTrigger", false)
-			EnableTrigger("LizaanTrigger", true) 			
+			EnableTrigger("LizaanTrigger", true)
+			EnableTrigger("PrepareSKD", true) 			
             
             -- Handle the riches message
             SendNoEcho(_Channel .. " @C(@DSKD@C) @WThe @RSea King @Wis @RDEAD @Wafter " .. timeString .. "! @GBOW @Wto receive plunder!@Y")
@@ -2279,9 +2290,9 @@ ml                        Alias to manually broadcast good moonlight location
             countdownTimerLizaanID = AddTimer(
                 "countdown_1", 
                 0, 
-                0, 
-                timerIntervalsLizaan[LizaantimerCount], 
-                "", 
+                0,
+				0,
+                timerIntervalsLizaan[LizaantimerCount],  
                 timer_flag.Enabled + timer_flag.OneShot + timer_flag.Temporary, 
                 "reportStatus"
             )
@@ -2331,9 +2342,9 @@ ml                        Alias to manually broadcast good moonlight location
                 countdownTimerLizaanID = AddTimer(
                     "countdown_" .. LizaantimerCount, 
                     0, 
-                    0, 
+                    0,
+					0,
                     timerIntervalsLizaan[LizaantimerCount], 
-                    "", 
                     timer_flag.Enabled + timer_flag.OneShot + timer_flag.Temporary, 
                     "reportStatus"
                 )
@@ -2404,16 +2415,3 @@ ml                        Alias to manually broadcast good moonlight location
     </script>
 
 </muclient>
-
-
-
-
-
-
-
-
-
-
-
-
-

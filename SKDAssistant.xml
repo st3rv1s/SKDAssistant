@@ -17,7 +17,7 @@
         date_written="2024-7-24 17:59:57"
         save_state="y"
         requires="5.07"
-        version="1.43"
+        version="1.45"
     >
         <description trim="y">
             <![CDATA[ 
@@ -63,7 +63,7 @@ lizstop                   Manually stops Lizaan timer if needed
 pylstop                   Manually stops Pylon timer if needed
 cc                        Alias to attack pylon after weapon swap
 fc                        Alias to load, aim and fire cannon at ceiling*
-ff                        Alias to load, aim and fire cannon at floor*
+fc                        Alias to load, aim and fire cannon at floor*
 ml                        Alias to manually broadcast good moonlight location
                           from current room.
 
@@ -1205,12 +1205,11 @@ ml                        Alias to manually broadcast good moonlight location
             -- Find the colored pylon segment
             local currentColor
             for _, s in ipairs(styles) do
-                if contains(_lilacColors, s.textcolour) then
-                    currentColor = "lilac"
-                elseif contains(_ceruleanColors, s.textcolour) then
-                    currentColor = "cerulean"
-                elseif contains(_seafoamColors, s.textcolour) then
-                    currentColor = "seafoam"
+                if contains(_lilacColors, s.textcolour) or
+                   contains(_ceruleanColors, s.textcolour) or
+                   contains(_seafoamColors, s.textcolour) then
+                    currentColor = s.textcolour
+                    break
                 end
             end
          
@@ -1625,7 +1624,7 @@ ml                        Alias to manually broadcast good moonlight location
                 -- Check if the enemy health percentage is below 12
                 if enemypct <= 12 then
                     -- Construct and send the additional message
-                    local extra_msg = "@C(@DSKD@C)) @WBe ready to @Ckill @Wthe @RSea King@W!@Y"
+                    local extra_msg = "@C(@DSKD@C) @WBe ready to @Ckill @Wthe @RSea King@W!@Y"
                     SendNoEcho(_Channel .. " " .. extra_msg)
                 end
             end
@@ -2416,4 +2415,3 @@ ml                        Alias to manually broadcast good moonlight location
     </script>
 
 </muclient>
-

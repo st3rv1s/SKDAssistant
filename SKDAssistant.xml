@@ -1624,7 +1624,7 @@ ml                        Alias to manually broadcast good moonlight location
                 -- Check if the enemy health percentage is below 12
                 if enemypct <= 12 then
                     -- Construct and send the additional message
-                    local extra_msg = "@C(@DSKD@C) @WBe ready to @Ckill @Wthe @RSea King@W!@Y"
+                    local extra_msg = "@C(@DSKD@C)) @WBe ready to @Ckill @Wthe @RSea King@W!@Y"
                     SendNoEcho(_Channel .. " " .. extra_msg)
                 end
             end
@@ -2023,6 +2023,8 @@ ml                        Alias to manually broadcast good moonlight location
             EnableTrigger("VisionBlurringTrigger", true)
             
             -- Send message indicating the epic has started
+            SendNoEcho("autoassist off")
+            SendNoEcho("nofollow")
             SendNoEcho(_Channel .. " @C(@DSKD@C) @WEpic has @Gstarted@W. Good luck and enjoy!@Y")
         end
         
@@ -2049,7 +2051,9 @@ ml                        Alias to manually broadcast good moonlight location
             SendNoEcho("get " .. _CeruleanWeapon .. " " .. _WeaponBag)
             SendNoEcho("get " .. _CeruleanDual .. " " .. _WeaponBag)
 	        SendNoEcho("get " .. _SeafoamWeapon .. " " .. _WeaponBag)
-            SendNoEcho("get " .. _SeafoamDual .. " " .. _WeaponBag)		
+            SendNoEcho("get " .. _SeafoamDual .. " " .. _WeaponBag)
+            SendNoEcho("autoassist off")
+            SendNoEcho("follow self")			
             SendNoEcho(_Channel .. " @C(@DSKD@C) @WEpic has @Gstarted@W. Good luck and enjoy!@Y")
         end
 		
@@ -2134,7 +2138,7 @@ ml                        Alias to manually broadcast good moonlight location
 			EnableTrigger("BadMLTrigger", false)
 			EnableTrigger("AutoGoodMLTrigger", false)
 			EnableTrigger("LizaanTrigger", true)
-			EnableTrigger("PrepareSKD", true) 			
+			EnableTrigger("PrepareSKD", true)
             
             -- Handle the riches message
             SendNoEcho(_Channel .. " @C(@DSKD@C) @WThe @RSea King @Wis @RDEAD @Wafter " .. timeString .. "! @GBOW @Wto receive plunder!@Y")
@@ -2290,9 +2294,9 @@ ml                        Alias to manually broadcast good moonlight location
             countdownTimerLizaanID = AddTimer(
                 "countdown_1", 
                 0, 
-                0,
-				0,
-                timerIntervalsLizaan[LizaantimerCount],  
+                0, 
+                timerIntervalsLizaan[LizaantimerCount], 
+                "", 
                 timer_flag.Enabled + timer_flag.OneShot + timer_flag.Temporary, 
                 "reportStatus"
             )
@@ -2342,9 +2346,9 @@ ml                        Alias to manually broadcast good moonlight location
                 countdownTimerLizaanID = AddTimer(
                     "countdown_" .. LizaantimerCount, 
                     0, 
-                    0,
-					0,
+                    0, 
                     timerIntervalsLizaan[LizaantimerCount], 
+                    "", 
                     timer_flag.Enabled + timer_flag.OneShot + timer_flag.Temporary, 
                     "reportStatus"
                 )

@@ -17,7 +17,7 @@
         date_written="2024-7-24 17:59:57"
         save_state="y"
         requires="5.07"
-        version="1.45"
+        version="1.46"
     >
         <description trim="y">
             <![CDATA[ 
@@ -2021,6 +2021,10 @@ ml                        Alias to manually broadcast good moonlight location
 			EnableTrigger("BadMLTrigger", true)		
 			EnableTrigger("AutoGoodMLTrigger", false)
             EnableTrigger("VisionBlurringTrigger", true)
+			
+			if (gmcp("group.leader") == gmcp("char.base.name")) then
+				SendNoEcho("nofollow")
+			end
             
             -- Send message indicating the epic has started
             SendNoEcho(_Channel .. " @C(@DSKD@C) @WEpic has @Gstarted@W. Good luck and enjoy!@Y")

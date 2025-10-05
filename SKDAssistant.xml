@@ -1032,7 +1032,6 @@ ml                        Alias to manually broadcast good moonlight location
                 cnote("")
 				ShowVersion()
 				checkPluginAndSetToggle()
-				cnote("")
 		end
         
         -- SETTING THE ID FOR LILAC WEAPONS
@@ -2423,3 +2422,4 @@ ml                        Alias to manually broadcast good moonlight location
     </script>
 
 </muclient>
+

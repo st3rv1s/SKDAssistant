@@ -17,62 +17,8 @@
         date_written="2024-7-24 17:59:57"
         save_state="y"
         requires="5.07"
-        version="1.46"
-    >
-        <description trim="y">
-            <![CDATA[ 
-            
---------------------------[SKD Assistant Helpfile]--------------------------
-
-skda info                 Toggle extra informational broadcasts
-skda channel x            Change channel of the broadcasts 
-skda update check         Check if there is a new version available
-skda update install       Install new version from Github
-skda settings             Show the configured settings
-skda help                 Outputs the helpfile of this plugin
-
--------------------------[SKD Assistant Weapons]--------------------------
-
-skda lilac x              Set the ID of lilac main weapon
-skda lilacdual x          Set the ID of lilac off-hand weapon
-skda lilacatk x           Set the ID of lilac attack*
-
-vulnerable to: Slash, Sonic, Electric, Air, Holy, Acid or Negative
-
-skda cerulean x           Set the ID of cerulean main weapon
-skda ceruleandual x       Set the ID of cerulean off-hand weapon
-skda ceruleanatk x        Set the ID of cerulean attack*
-
-vulnerable to: Light, Bash, Energy, Fire or Earth
-
-skda seafoam x            Set the ID of seafoam main weapon
-skda seafoamdual x        Set the ID of seafoam off-hand weapon
-skda seafoamatk x         Set the ID of seafoam attack*
-
-vulnerable to: Mental, Magic, Pierce, Cold, Shadow or Water
-
-skda bag x                Set the ID of the weapon bag
-skda shield x             Set the ID of your shield
-skda hold x               Set the ID of your hold
-
-* this can be any skill or spell. For example 'c 362' or 'backstab'.
-
--------------------------[SKD Assistant Commands]--------------------------
-
-lizstop                   Manually stops Lizaan timer if needed
-pylstop                   Manually stops Pylon timer if needed
-cc                        Alias to attack pylon after weapon swap
-fc                        Alias to load, aim and fire cannon at ceiling*
-fc                        Alias to load, aim and fire cannon at floor*
-ml                        Alias to manually broadcast good moonlight location
-                          from current room.
-
-* these commands will run you back to the cannon and fire it.
-
--------------------------[SKD Assistant Helpfile]--------------------------
-            
-            ]]>
-        </description>  
+        version="1.47"
+    > 
     </plugin>
 
     <!--  Aliases for the plugin  -->
@@ -809,7 +755,7 @@ ml                        Alias to manually broadcast good moonlight location
         plugin_url = "https://raw.githubusercontent.com/st3rv1s/SKDAssistant/refs/heads/main/SKDAssistant.xml"
         SetVariable("DownloadURL", plugin_url)
         plugin_protocol = "HTTPS"
-        plugin_prefix = "[SKDAssistant]"
+        plugin_prefix = "SKDAssistant"
         
         function update_check_alias()
             update_plugin("check")
@@ -899,31 +845,94 @@ ml                        Alias to manually broadcast good moonlight location
 		
 	MinorToggle = "false"
 	pylonPhaseTriggered = false
-        local _skdaINFO = "OFF"
-        local _Channel = "gtell"
-        local _LilacWeapon = "lilacweapon"
-        local _LilacDual = "lilacdual"
-        local _CeruleanWeapon = "ceruleanweapon"
-        local _CeruleanDual = "ceruleandual"
-        local _SeafoamWeapon = "seafoamweapon"
-        local _SeafoamDual = "seafoamdual"
-        local _LilacATK = "lilacatk"
-        local _CeruleanATK = "ceruleanatk"
-        local _SeafoamATK = "seafoamatk"
-        local _WeaponBag = "bag"
-        local _ShieldSKD = "shield"
-        local _HoldSKD = "hold"
-		local self_taunt_active = false
-		local self_fired_active = false
+    local _skdaINFO = "OFF"
+    local _Channel = "gtell"
+    local _LilacWeapon = "lilacweapon"
+    local _LilacDual = "lilacdual"
+    local _CeruleanWeapon = "ceruleanweapon"
+    local _CeruleanDual = "ceruleandual"
+    local _SeafoamWeapon = "seafoamweapon"
+    local _SeafoamDual = "seafoamdual"
+    local _LilacATK = "lilacatk"
+    local _CeruleanATK = "ceruleanatk"
+    local _SeafoamATK = "seafoamatk"
+    local _WeaponBag = "bag"
+    local _ShieldSKD = "shield"
+    local _HoldSKD = "hold"
+	local self_taunt_active = false
+	local self_fired_active = false
 	local startTime = 0
 	local endTime = 0 
+	local PLUGIN_VERSION = GetPluginInfo(GetPluginID(), 19) or 0
+	local versionStr = string.format("%.2f", PLUGIN_VERSION)
 						
-	 require "serialize"
-	 require "commas"
-	 require "gmcphelper"
+	require "serialize"
+	require "commas"
+	require "gmcphelper"
 			       
-        function OnHelp()
-            world.Note(world.GetPluginInfo(world.GetPluginID(), 3))
+		function OnHelp()
+			-- Print the description (if you have a separate desc variable)
+			if desc then
+				world.Note(desc)
+			end
+		
+			-- Print the main helpfile with version
+			world.Note(string.format([[		
+				
++-------------------------[SKD Assistant Helpfile]--------------------------+
+
+skda info                 Toggle extra informational broadcasts
+skda channel x            Change channel of the broadcasts 
+skda update check         Check if there is a new version available
+skda update install       Install new version from Github
+skda settings             Show the configured settings
+skda help                 Outputs the helpfile of this plugin
+
++------------------------[SKD Assistant Weapons]----------------------------+
+
+skda lilac x              Set the ID of lilac main weapon
+skda lilacdual x          Set the ID of lilac off-hand weapon
+skda lilacatk x           Set the ID of lilac attack*
+
+vulnerable to: Slash, Sonic, Electric, Air, Holy, Acid or Negative
+
+skda cerulean x           Set the ID of cerulean main weapon
+skda ceruleandual x       Set the ID of cerulean off-hand weapon
+skda ceruleanatk x        Set the ID of cerulean attack*
+
+vulnerable to: Light, Bash, Energy, Fire or Earth
+
+skda seafoam x            Set the ID of seafoam main weapon
+skda seafoamdual x        Set the ID of seafoam off-hand weapon
+skda seafoamatk x         Set the ID of seafoam attack*
+
+vulnerable to: Mental, Magic, Pierce, Cold, Shadow or Water
+
+skda bag x                Set the ID of the weapon bag
+skda shield x             Set the ID of your shield
+skda hold x               Set the ID of your hold
+
+* this can be any skill or spell. For example 'c 362' or 'backstab'.
+
++------------------------[SKD Assistant Commands]---------------------------+
+
+lizstop                   Manually stops Lizaan timer if needed
+pylstop                   Manually stops Pylon timer if needed
+cc                        Alias to attack pylon after weapon swap
+fc                        Alias to load, aim and fire cannon at ceiling*
+fc                        Alias to load, aim and fire cannon at floor*
+ml                        Alias to manually broadcast good moonlight location
+                          from current room.
+
+* these commands will run you back to the cannon and fire it.
+
++------------------------[SKD Assistant v%s]------------------------------+
+]], versionStr))
+
+        end
+		
+        function ShowVersion()
+            cnote("@W" .. plugin_prefix .. " @cv" .. versionStr)
         end
 		
 		-- Function to trim of beginning & ending spaces
@@ -1021,6 +1030,7 @@ ml                        Alias to manually broadcast good moonlight location
                 ColourNote("white", "", "", "white", "", "")  
                 cnote("@C+@W-------------------[@CSKD Assistant Settings@W]-------------------@C+@w")
                 cnote("")
+				ShowVersion()
 				checkPluginAndSetToggle()
 				cnote("")
 		end
@@ -2413,4 +2423,3 @@ ml                        Alias to manually broadcast good moonlight location
     </script>
 
 </muclient>
-

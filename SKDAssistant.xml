@@ -1625,7 +1625,7 @@ ml                        Alias to manually broadcast good moonlight location
                 -- Construct the primary message
 				--local msg = " @C(@DSKD@C) @R" .. enemy
                 local msg = " @C(@DSKD@C) @WThe @RSea King"
-                msg = msg .. " @C(@R" .. enemypct .. "%@C)@W is attacking @Rme @wat @C" .. statement .. "@Y"
+                msg = msg .. " @C(@R" .. enemypct .. "%@C)@W is attacking @Rme @Wat @C" .. statement .. "@Y"
                 
                 -- Send the primary message silently (no echo)
                 SendNoEcho("gtell " .. msg)
@@ -2422,4 +2422,5 @@ ml                        Alias to manually broadcast good moonlight location
     </script>
 
 </muclient>
+
 

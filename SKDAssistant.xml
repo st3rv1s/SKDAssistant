@@ -17,7 +17,7 @@
         date_written="2024-7-24 17:59:57"
         save_state="y"
         requires="5.07"
-        version="1.47"
+        version="1.48"
     > 
     </plugin>
 
@@ -1186,12 +1186,7 @@ ml                        Alias to manually broadcast good moonlight location
             end
             Note("The current bag ID is: " .. _WeaponBag)
         end
-                
-        -- Store pylon colors
-        _lilacColors    = { ColoursToStyles("@x147")[1].textcolour }
-        _ceruleanColors = { ColoursToStyles("@x075")[1].textcolour }
-        _seafoamColors  = { ColoursToStyles("@x159")[1].textcolour }
-         
+                        
         -- Track last pylon color
         local lastPylonColor = nil
          
@@ -1205,6 +1200,12 @@ ml                        Alias to manually broadcast good moonlight location
          
         -- Handle pylon colors and weapon/attacks swaps
         function PylonColorsTrigger(name, line, wildcards, styles)
+
+            -- refresh colors each time, so Mudlet always knows them
+            local _lilacColors    = { ColoursToStyles("@x147")[1].textcolour }
+            local _ceruleanColors = { ColoursToStyles("@x075")[1].textcolour }
+            local _seafoamColors  = { ColoursToStyles("@x159")[1].textcolour }
+	
             if not pylonPhaseTriggered then
                 PylonPhaseTrigger(name, line, wildcards, styles)
                 pylonPhaseTriggered = true
@@ -2422,5 +2423,3 @@ ml                        Alias to manually broadcast good moonlight location
     </script>
 
 </muclient>
-
-

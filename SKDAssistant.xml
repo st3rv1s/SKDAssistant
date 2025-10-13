@@ -540,7 +540,7 @@
         <!-- Trigger for HEAL PHASE CONFIRM -->
         <trigger
             name="ConfirmHealPhase"
-            match="^His eyes begin to glow red, and you feel your soul start to pull away from your body.$"
+            match="^His eyes begin to glow red, and you feel your soul start to pull away from your body.$|^That would only make things worse right now.$"
             enabled="y"
             group="SKDA"
             regexp="y"

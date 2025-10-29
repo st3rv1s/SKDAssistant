@@ -1201,7 +1201,6 @@ ml                        Alias to manually broadcast good moonlight location
         -- Handle pylon colors and weapon/attacks swaps
         function PylonColorsTrigger(name, line, wildcards, styles)
 
-            -- refresh colors each time, so Mudlet always knows them
             local _lilacColors    = { ColoursToStyles("@x147")[1].textcolour }
             local _ceruleanColors = { ColoursToStyles("@x075")[1].textcolour }
             local _seafoamColors  = { ColoursToStyles("@x159")[1].textcolour }
@@ -2423,5 +2422,6 @@ ml                        Alias to manually broadcast good moonlight location
     </script>
 
 </muclient>
+
 
 

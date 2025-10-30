@@ -1205,6 +1205,10 @@ ml                        Alias to manually broadcast good moonlight location
         -- Handle pylon colors and weapon/attacks swaps
         function PylonColorsTrigger(name, line, wildcards, styles)
 
+			_LILAC_COLOR    = "@x147"
+			_CERULEAN_COLOR = "@x075"
+			_SEAFOAM_COLOR  = "@x159"
+
 			local _lilacColors    = { _LILAC_COLOR }
 			local _ceruleanColors = { _CERULEAN_COLOR }
 			local _seafoamColors  = { _SEAFOAM_COLOR }
@@ -2438,3 +2442,4 @@ ml                        Alias to manually broadcast good moonlight location
     </script>
 
 </muclient>
+

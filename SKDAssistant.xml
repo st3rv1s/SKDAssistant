@@ -17,7 +17,7 @@
         date_written="2024-7-24 17:59:57"
         save_state="y"
         requires="5.07"
-        version="1.49"
+        version="1.50"
     > 
     </plugin>
 
@@ -341,7 +341,7 @@
     
         <!-- Trigger for PYLON WEAPONS -->
         <trigger
-            match=".*crystal pylon stands several spans above your head, glowing faintly.$"
+            match="^.*crystal pylon stands several spans above your head, glowing faintly.$"
             name="PylonColorsTrigger"
             enabled="y"
             omit_from_output="n"
@@ -1033,11 +1033,7 @@ ml                        Alias to manually broadcast good moonlight location
 				ShowVersion()
 				checkPluginAndSetToggle()
 		end
-		
-        _LILAC_COLOR    = ColoursToStyles("@x147")[1].textcolour
-        _CERULEAN_COLOR = ColoursToStyles("@x075")[1].textcolour
-        _SEAFOAM_COLOR  = ColoursToStyles("@x159")[1].textcolour
-        
+		        
         -- SETTING THE ID FOR LILAC WEAPONS
         function SetLilac(name, line, wildcards)
             _LilacWeapon = wildcards[1]
@@ -1190,112 +1186,65 @@ ml                        Alias to manually broadcast good moonlight location
             end
             Note("The current bag ID is: " .. _WeaponBag)
         end
-                        
-        -- Track last pylon color
+		
+        -- Pylon color constants
+        _LILAC_COLOR    = ColoursToStyles("@x147")[1].textcolour
+        _CERULEAN_COLOR = ColoursToStyles("@x075")[1].textcolour
+        _SEAFOAM_COLOR  = ColoursToStyles("@x159")[1].textcolour
+        
+        -- Track last pylon color to avoid duplicates
         local lastPylonColor = nil
-         
-        -- Helper to check if a value exists in a table
-        function contains(tbl, val)
-            for _, v in ipairs(tbl) do
-                if v == val then return true end
-            end
-            return false
-        end
-         
+        
         -- Handle pylon colors and weapon/attacks swaps
         function PylonColorsTrigger(name, line, wildcards, styles)
-
-			_LILAC_COLOR    = "@x147"
-			_CERULEAN_COLOR = "@x075"
-			_SEAFOAM_COLOR  = "@x159"
-
-			local _lilacColors    = { _LILAC_COLOR }
-			local _ceruleanColors = { _CERULEAN_COLOR }
-			local _seafoamColors  = { _SEAFOAM_COLOR }
-	
             if not pylonPhaseTriggered then
                 PylonPhaseTrigger(name, line, wildcards, styles)
                 pylonPhaseTriggered = true
                 PylonTimer()
             end
-         
-            -- Find the colored pylon segment
+        
+            -- Detect the first style segment that matches any pylon color
             local currentColor
             for _, s in ipairs(styles) do
-                if contains(_lilacColors, s.textcolour) or
-                   contains(_ceruleanColors, s.textcolour) or
-                   contains(_seafoamColors, s.textcolour) then
-                    currentColor = s.textcolour
+                local c = s.textcolour
+                if c == _LILAC_COLOR or c == _CERULEAN_COLOR or c == _SEAFOAM_COLOR then
+                    currentColor = c
                     break
                 end
             end
-		
-            -- Fallback: if no color was detected, try reading it from the line text
-            if not currentColor then
-                local lline = line:lower()
-                if lline:find("lilac crystal pylon") then
-                    currentColor = _LILAC_COLOR
-                elseif lline:find("cerulean crystal pylon") then
-                    currentColor = _CERULEAN_COLOR
-                elseif lline:find("seafoam crystal pylon") then
-                    currentColor = _SEAFOAM_COLOR
-                end
-            end
-         
+        
+            -- If no color detected or same as last, exit
             if not currentColor or currentColor == lastPylonColor then return end
             lastPylonColor = currentColor
-         
-            if contains(_lilacColors, currentColor) then
-                local lmsg = "@C(@DSKD@C) @WDamage types for lilac crystal pylon: @MSlash@W, @MSonic@W, @MElectric@W, @MAir@W, @MHoly @Wor @MNegative@w"
-				
-				if _skdaINFO == "ON" then
-					if MinorToggle == "true" then 
-						sendMessage(lmsg)
-					else 
-						cnote(lmsg) 
-					end
-				end
-				
-                --SendNoEcho("get " .. _LilacWeapon .. " " .. _WeaponBag)
-				SendNoEcho("remove second")
+        
+            -- Map each color to its handlers
+            if currentColor == _LILAC_COLOR then
+                local msg = "@C(@DSKD@C) @WDamage types for lilac crystal pylon: @MSlash@W, @MSonic@W, @MElectric@W, @MAir@W, @MHoly @Wor @MNegative@w"
+                if _skdaINFO == "ON" then
+                    if MinorToggle == "true" then sendMessage(msg) else cnote(msg) end
+                end
+                SendNoEcho("remove second")
                 SendNoEcho("wield " .. _LilacWeapon)
-                --SendNoEcho("get " .. _LilacDual .. " " .. _WeaponBag)
                 SendNoEcho("second " .. _LilacDual)
                 SendNoEcho("alias cc " .. _LilacATK .. " pylon")
-         
-            elseif contains(_ceruleanColors, currentColor) then
-                local cmsg = "@C(@DSKD@C) @WDamage types for cerulean crystal pylon: @BLight@W, @BBash@W, @BEnergy@W, @BFire@W, @BAcid @Wor @BEarth@w"
-				
-				if _skdaINFO == "ON" then
-					if MinorToggle == "true" then 
-						sendMessage(cmsg)
-					else 
-						cnote(cmsg) 
-					end
-				end
-				
-               --SendNoEcho("get " .. _CeruleanWeapon .. " " .. _WeaponBag)
-				SendNoEcho("remove second")
+        
+            elseif currentColor == _CERULEAN_COLOR then
+                local msg = "@C(@DSKD@C) @WDamage types for cerulean crystal pylon: @BLight@W, @BBash@W, @BEnergy@W, @BFire@W, @BAcid @Wor @BEarth@w"
+                if _skdaINFO == "ON" then
+                    if MinorToggle == "true" then sendMessage(msg) else cnote(msg) end
+                end
+                SendNoEcho("remove second")
                 SendNoEcho("wield " .. _CeruleanWeapon)
-                --SendNoEcho("get " .. _CeruleanDual .. " " .. _WeaponBag)
                 SendNoEcho("second " .. _CeruleanDual)
                 SendNoEcho("alias cc " .. _CeruleanATK .. " pylon")
-         
-            elseif contains(_seafoamColors, currentColor) then
-                local smsg = "@C(@DSKD@C) @WDamage types for seafoam crystal pylon: @YMental@W, @YMagic@W, @YPierce@W, @YCold@W, @YShadow @Wor @YWater@w"
-				
-				if _skdaINFO == "ON" then
-					if MinorToggle == "true" then 
-						sendMessage(smsg)
-					else 
-						cnote(smsg) 
-					end
-				end
-				
-                --SendNoEcho("get " .. _SeafoamWeapon .. " " .. _WeaponBag)
-				SendNoEcho("remove second")
+        
+            elseif currentColor == _SEAFOAM_COLOR then
+                local msg = "@C(@DSKD@C) @WDamage types for seafoam crystal pylon: @YMental@W, @YMagic@W, @YPierce@W, @YCold@W, @YShadow @Wor @YWater@w"
+                if _skdaINFO == "ON" then
+                    if MinorToggle == "true" then sendMessage(msg) else cnote(msg) end
+                end
+                SendNoEcho("remove second")
                 SendNoEcho("wield " .. _SeafoamWeapon)
-                --SendNoEcho("get " .. _SeafoamDual .. " " .. _WeaponBag)
                 SendNoEcho("second " .. _SeafoamDual)
                 SendNoEcho("alias cc " .. _SeafoamATK .. " pylon")
             end
@@ -1309,19 +1258,11 @@ ml                        Alias to manually broadcast good moonlight location
                 pylonPhaseTriggered = true
                 PylonTimer()
             end
-         
-            -- Detect color directly from the spawn line
-            for i, s in ipairs(styles) do
-                local str_lower = s.text:lower()
-             
-                if string.find(str_lower, "crystal pylon") then
-                    -- Call the existing color handler
-                    PylonColorsTrigger(name, line, wildcards, styles)
-                    break
-                end
-            end
+			
+            PylonColorsTrigger(name, line, wildcards, styles)
+			
         end
-        
+		        
         -- Reset the flag when necessary
         function resetPylonPhaseTriggerFlag()
             pylonPhaseTriggered = false
@@ -2442,4 +2383,3 @@ ml                        Alias to manually broadcast good moonlight location
     </script>
 
 </muclient>
-

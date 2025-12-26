@@ -17,7 +17,7 @@
         date_written="2024-7-24 17:59:57"
         save_state="y"
         requires="5.07"
-        version="1.50"
+        version="1.51"
     > 
     </plugin>
 
@@ -245,7 +245,7 @@
     
         <!-- Define the alias for reporting GOOD MOONLIGHT -->
         <alias
-            match="^ml$"
+            match="^rm$"
 			name="ManualML"
             enabled="y"
             group="SKDA"
@@ -674,7 +674,7 @@
         <!-- Trigger for SKD FINISH -->
         <trigger
             name="RichesTrigger"
-            match="^Around you are piles of riches - heaps of gold, uncountable gems.$"
+            match="^.*heaps of gold, uncountable gems\.$"
             enabled="y"
             group="SKDA"
             regexp="y"
@@ -921,7 +921,7 @@ pylstop                   Manually stops Pylon timer if needed
 cc                        Alias to attack pylon after weapon swap
 fc                        Alias to load, aim and fire cannon at ceiling*
 ff                        Alias to load, aim and fire cannon at floor*
-ml                        Alias to manually broadcast good moonlight location
+rm                        Alias to manually report good moonlight location
                           from current room.
 
 * these commands will run you back to the cannon and fire it.
@@ -1594,7 +1594,7 @@ ml                        Alias to manually broadcast good moonlight location
                 -- Check if the enemy health percentage is below 12
                 if enemypct <= 12 then
                     -- Construct and send the additional message
-                    local extra_msg = "@C(@DSKD@C)) @WBe ready to @Ckill @Wthe @RSea King@W!@Y"
+                    local extra_msg = "@C(@DSKD@C) @WBe ready to @Ckill @Wthe @RSea King@W!@Y"
                     SendNoEcho(_Channel .. " " .. extra_msg)
                 end
             end

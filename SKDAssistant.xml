@@ -17,7 +17,7 @@
         date_written="2024-7-24 17:59:57"
         save_state="y"
         requires="5.07"
-        version="1.52"
+        version="1.53"
     > 
     </plugin>
 
@@ -2046,7 +2046,11 @@ rm                        Alias to manually report good moonlight location
             playerName = gmcp("char.base.name")
 		
             -- Check if the line contains both the player's name and "the Sea King"
-            if playerName and line:match(playerName) and (line:match("the Sea King") or line:match("crystal pylon") or line:match("Lizaan")) then
+            if playerName 
+			and line:match(playerName) 
+			and (line:match("the Sea King") or line:match("crystal pylon") or line:match("Lizaan"))
+			and not line:match("^From a broiling ocean arose") 
+			then
                 LizaanTimerStop()
                 PylonTimerStop()
 			    lastCannonRoom = nil
@@ -2383,5 +2387,6 @@ rm                        Alias to manually report good moonlight location
     </script>
 
 </muclient>
+
 
 

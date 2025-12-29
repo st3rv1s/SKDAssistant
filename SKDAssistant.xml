@@ -1804,7 +1804,7 @@ rm                        Alias to manually report good moonlight location
                 
         -- Function that echoes instructions for GOOD MOONLIGHT
         function GoodMLReport(name, line, wildcards, styles)
-			mgmlmsg = "@C(@DSKD@C) @WType '@Cml@W' to manually report @Ggood @Wmoonlight if it has @Rmoved@W!@w" 
+			mgmlmsg = "@C(@DSKD@C) @WType '@Crm@W' to manually report @Ggood @Wmoonlight if it has @Rmoved@W!@w" 
 
 			if _skdaINFO == "ON" then
 				if MinorToggle == "true" then 
@@ -2383,3 +2383,4 @@ rm                        Alias to manually report good moonlight location
     </script>
 
 </muclient>
+

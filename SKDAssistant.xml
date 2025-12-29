@@ -17,7 +17,7 @@
         date_written="2024-7-24 17:59:57"
         save_state="y"
         requires="5.07"
-        version="1.51"
+        version="1.52"
     > 
     </plugin>
 
@@ -2383,4 +2383,5 @@ rm                        Alias to manually report good moonlight location
     </script>
 
 </muclient>
+
 
